@@ -1,0 +1,916 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ghala Mansour — AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  @font-face{font-family:"Thmanyah Sans";src:url("fonts/thmanyahsans-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+  @font-face{font-family:"Thmanyah Sans";src:url("fonts/thmanyahsans-Medium.woff2") format("woff2");font-weight:500;font-display:swap}
+  @font-face{font-family:"Thmanyah Sans";src:url("fonts/thmanyahsans-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+  @font-face{font-family:"Thmanyah Display";src:url("fonts/thmanyahserifdisplay-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+  @font-face{font-family:"Thmanyah Display";src:url("fonts/thmanyahserifdisplay-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+  @font-face{font-family:"Thmanyah Display";src:url("fonts/thmanyahserifdisplay-Black.woff2") format("woff2");font-weight:900;font-display:swap}
+  @font-face{font-family:"Thmanyah Text";src:url("fonts/thmanyahseriftext-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+</style>
+<style>
+  :root{
+    --bg:#0D1317; --bg-2:#141D22; --text:#F6F2EA; --muted:#A1A79F; --line:rgba(246,242,234,.16);
+    --accent:#36C8A6; --accent-soft:rgba(54,200,166,.15); --cool:#8A9790;
+    --f-display:"Thmanyah Display","IBM Plex Sans Arabic",Georgia,serif;
+    --f-body:"Thmanyah Sans","IBM Plex Sans Arabic",system-ui,sans-serif;
+    --f-text:"Thmanyah Text","IBM Plex Sans Arabic",Georgia,serif;
+    --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  }
+  :root[data-theme="light"]{
+    --bg:#F5F1E9; --bg-2:#FBF8F2; --text:#171412; --muted:#6B655C; --line:rgba(23,20,18,.16);
+    --accent:#0F7A66; --accent-soft:rgba(15,122,102,.12); --cool:#8C8579;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--f-body);-webkit-font-smoothing:antialiased;transition:background .5s,color .5s}
+  body{overflow-x:hidden}
+  #gl{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+  .vignette{position:fixed;inset:0;z-index:1;pointer-events:none}
+  .glow{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.5;
+    background:radial-gradient(60% 55% at var(--gx,70%) 45%, color-mix(in srgb, var(--accent) 40%, transparent) 0%, transparent 65%);
+    transition:background .6s linear}
+  .grain{position:fixed;inset:-50%;z-index:2;pointer-events:none;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation:grain 7s steps(6) infinite}
+  @keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-2%)}80%{transform:translate(3%,1%)}100%{transform:translate(0,0)}}
+
+  .skip{position:fixed;z-index:9;top:-100px;inset-inline-start:16px;background:var(--accent);color:#0B0F12;
+    font:600 13px/1 var(--f-mono);padding:12px 16px;border-radius:8px;text-decoration:none;transition:top .2s}
+  .skip:focus{top:16px}
+  :where(a,button,[tabindex]):focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+  .beat:focus-visible{outline:none}
+  .beat:focus-visible .box{outline:3px solid var(--accent);outline-offset:18px;border-radius:10px}
+  .hud{position:fixed;z-index:5;inset:0 0 auto 0;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px clamp(16px,3vw,34px)}
+  .hud .brand{font-family:var(--f-display);font-weight:600;font-size:15px;letter-spacing:-.01em}
+  .hud .right{display:flex;align-items:center;gap:8px}
+  .rail{font:500 10.5px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);direction:ltr;margin-inline-end:4px}
+  .pill{font:500 12px/1 var(--f-mono);color:var(--text);background:color-mix(in srgb,var(--bg) 70%,transparent);
+    border:1px solid var(--line);border-radius:999px;min-height:44px;padding:0 16px;cursor:pointer;
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:border-color .2s ease,color .2s ease}
+  .pill:hover{border-color:var(--accent)}
+  .progress{position:fixed;z-index:5;inset:auto 0 0 0;height:2px;background:color-mix(in srgb,var(--text) 12%,transparent)}
+  .progress i{display:block;height:100%;width:0;background:var(--accent)}
+
+  main{position:relative;z-index:3}
+  .beat{min-height:112vh;display:grid;align-content:center;padding-inline:clamp(16px,6vw,112px);padding-block:clamp(104px,16vh,190px) 14vh}
+  .beat .box{max-width:min(540px,92vw);display:grid;gap:15px;opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
+  .beat.in .box{opacity:1;transform:none}
+  .beat.a{justify-items:start}
+  .beat.b{justify-items:end}
+  html[dir="rtl"] .beat .box{text-align:right}
+  .kicker{margin:0;font:500 11px/1.4 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);direction:ltr}
+  html[dir="rtl"] .kicker{text-align:right}
+  h1{margin:0;font-family:var(--f-display);font-weight:900;font-size:clamp(44px,7.4vw,96px);letter-spacing:-.03em;line-height:.98}
+  h2{margin:0;font-family:var(--f-display);font-weight:700;font-size:clamp(30px,4.6vw,56px);letter-spacing:-.025em;line-height:1.06;text-wrap:balance}
+  p{margin:0;font-size:clamp(15.5px,1.45vw,17.5px);line-height:1.75;color:color-mix(in srgb,var(--text) 82%,transparent)}
+  .lede{font-family:var(--f-text);font-size:clamp(18px,1.9vw,22px);line-height:1.55;color:var(--text)}
+  .facts{display:flex;flex-wrap:wrap;gap:12px 30px;margin:4px 0 0;padding:0;list-style:none}
+  .facts li{display:grid;gap:3px}
+  .facts b{font-family:var(--f-display);font-size:clamp(23px,2.7vw,34px);font-weight:900;letter-spacing:-.03em;line-height:1;direction:ltr;color:var(--accent)}
+  .facts span{font:500 10px/1.3 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);direction:ltr}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+  .chips li{font:400 11.5px/1 var(--f-mono);color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:7px 9px;direction:ltr}
+  .flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font:500 11.5px/1 var(--f-mono)}
+  .flow span{border:1px solid var(--line);border-radius:5px;padding:9px 10px;background:color-mix(in srgb,var(--bg) 55%,transparent)}
+  .flow span.human{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+  .flow i{font-style:normal;color:var(--muted)}
+  .links{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .links a{text-decoration:none;color:var(--text);font:500 13px/1 var(--f-mono);border:1px solid var(--line);border-radius:999px;
+    min-height:44px;display:inline-flex;align-items:center;padding:0 18px;direction:ltr;transition:border-color .2s ease,transform .2s ease}
+  .links a:hover{transform:translateY(-1px)}
+  .links a:first-child{background:var(--accent);border-color:var(--accent);color:#06130D}
+  .scrollcue{position:fixed;z-index:4;inset:auto 0 20px 0;text-align:center;font:500 10px/1 var(--f-mono);letter-spacing:.18em;color:var(--muted);transition:opacity .5s}
+  @media (max-width:860px){
+    .beat{min-height:102vh;padding-block:88px 12vh}
+    .beat.a,.beat.b{justify-items:start;align-content:end}
+    .beat .box{max-width:100%;gap:13px}
+    h1{font-size:clamp(38px,11vw,58px)}
+    h2{font-size:clamp(26px,7.4vw,38px)}
+    .lede{font-size:17px}
+    p{font-size:15.5px}
+    .facts{gap:10px 22px}
+    .hud{padding:12px 14px;gap:8px}
+    .rail{display:none}
+    .pill{min-height:40px;padding:0 12px;font-size:11.5px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .beat .box{transition:none;opacity:1;transform:none}
+    .grain{animation:none}
+    .skip,.pill,.links a{transition:none}
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#story">Skip to content</a>
+<canvas id="gl"></canvas>
+<div class="glow" id="glow"></div>
+<div class="vignette"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="hud">
+  <span class="brand" id="brand">Ghala Mansour</span>
+  <span class="right">
+    <span class="rail" id="rail">AI ENGINEER</span>
+    <button class="pill" id="langBtn">العربية</button>
+    <button class="pill" id="themeBtn">Light</button>
+  </span>
+</div>
+<div class="progress"><i id="bar"></i></div>
+<div class="scrollcue" id="cue">SCROLL</div>
+
+<main id="story"></main>
+
+<script>
+/* ---------- bilingual content ---------- */
+const STORY = [
+  { side:'a',
+    en:{ kicker:'AI Engineer · Makkah, Saudi Arabia', h1:'Ghala Mansour',
+         lede:'I build AI that reads Arabic, sees the physical world, and runs inside real operations — with a person holding the final decision.' },
+    ar:{ kicker:'مهندسة ذكاء اصطناعي · مكة المكرمة', h1:'غلا منصور',
+         lede:'أبني ذكاءً اصطناعياً يقرأ العربية، ويرى العالم من حوله، ويعمل داخل عمليات حقيقية، ويبقى القرار الأخير بيد إنسان.' } },
+
+  { side:'b',
+    en:{ kicker:'Graduation project · 2025–2026 · team of four', h2:'Janah',
+         lede:'An Arabic human–drone framework for finding missing children.',
+         p:'A parent files a report in the app. A language model turns the Arabic report and the rescuer\'s spoken instructions into a bounded flight plan, the drone searches with computer vision, and no match is accepted without a human.' },
+    ar:{ kicker:'مشروع التخرج · ٢٠٢٥–٢٠٢٦ · فريق من أربعة', h2:'جناح',
+         lede:'إطار عربي للتفاعل بين الإنسان والدرون في البحث عن الأطفال المفقودين.',
+         p:'الأهل يرفعون البلاغ من التطبيق، ونموذج لغوي يحوّل البلاغ وتعليمات رجل الإنقاذ الصوتية إلى خطة طيران محدودة الصلاحيات، والدرون يبحث بالرؤية الحاسوبية، ولا تُعتمد أي مطابقة دون إنسان.' } },
+
+  { side:'a',
+    en:{ kicker:'01 · Report', h2:'A report in Arabic, in under a minute',
+         p:'Text or voice, one reference photo of the child, and the location. That is everything the system needs to start — no forms to learn, no piloting skills required.',
+         facts:[['< 1 min','to file a report'],['1 photo','is enough to match']] },
+    ar:{ kicker:'٠١ · البلاغ', h2:'بلاغ بالعربية في أقل من دقيقة',
+         p:'نص أو صوت، وصورة مرجعية واحدة للطفل، والموقع. هذا كل ما يحتاجه النظام ليبدأ، بلا نماذج معقدة ولا خبرة في قيادة الطائرات.',
+         facts:[['< دقيقة','لرفع البلاغ'],['صورة واحدة','تكفي للمطابقة']] } },
+
+  { side:'b',
+    en:{ kicker:'02 · Plan', h2:'From an Arabic sentence to a flight mission',
+         p:'The model turns commands like "ابحث حول الساحة" into a mission with bounded autonomy. A safety layer rejects anything outside the envelope — altitude, distance, battery — and lands the drone when a limit is reached.',
+         flow:['Arabic command','LLM plan','Safety layer','Execute'] },
+    ar:{ kicker:'٠٢ · الخطة', h2:'من جملة عربية إلى مهمة طيران',
+         p:'النموذج يحوّل أوامر مثل «ابحث حول الساحة» إلى مهمة محدودة الصلاحيات، وطبقة أمان ترفض أي أمر خارج الحدود الآمنة من ارتفاع ومسافة وبطارية، وتنفّذ هبوطاً عند بلوغ أي حد.',
+         flow:['أمر عربي','خطة النموذج','طبقة الأمان','تنفيذ'] } },
+
+  { side:'a',
+    en:{ kicker:'03 · See', h2:'Finding one child among many',
+         p:'Person detection runs on the drone feed, then each candidate is compared against the single reference photo and the clothing colour described in the report. It runs on an ordinary CPU with a DJI Tello — no GPU rig in the field.',
+         facts:[['~0.5 s','per frame · CPU'],['< 2 s','backend response'],['160','tests passed']],
+         chips:['DJI Tello','Flask API','Firebase','Real-time CV'] },
+    ar:{ kicker:'٠٣ · الرؤية', h2:'العثور على طفل واحد بين كثيرين',
+         p:'كشف الأشخاص يعمل على بث الدرون، ثم يُقارن كل مرشح بالصورة المرجعية الواحدة وبلون الملابس المذكور في البلاغ. ويعمل على معالج عادي مع درون DJI Tello، بلا عتاد رسومي في الميدان.',
+         facts:[['~٠٫٥ ث','لكل إطار · CPU'],['< ٢ ث','استجابة الخادم'],['١٦٠','اختبار ناجح']],
+         chips:['DJI Tello','Flask API','Firebase','Real-time CV'] } },
+
+  { side:'b',
+    en:{ kicker:'04 · Confirm', h2:'The model proposes. A person decides.',
+         p:'Candidates are ranked and shown to the rescue team; the report closes only when a human confirms the match. That boundary is the design, not a limitation — it is what makes the system safe to put near a missing child.',
+         flow:['Candidates','Rescue team confirms','Report closed'], human:1 },
+    ar:{ kicker:'٠٤ · التأكيد', h2:'النموذج يرشّح، والإنسان يقرر',
+         p:'تُرتَّب الاحتمالات وتُعرض على فريق الإنقاذ، ولا يُغلق البلاغ إلا بتأكيد إنسان للمطابقة. هذا الحد تصميمٌ مقصود لا قصور، وهو ما يجعل النظام آمناً قرب طفل مفقود.',
+         flow:['مرشحون','تأكيد فريق الإنقاذ','إغلاق البلاغ'], human:1 } },
+
+  { side:'a',
+    en:{ kicker:'Kidana Development Company · Hajj 2026', h2:'Catching the same report twice',
+         p:'During Hajj, thousands of maintenance reports arrive in Arabic, written differently by different people, many describing the same problem. My service polls Maximo over OSLC every 15 seconds, normalises the Arabic, groups reports by location code, then scores each pair on wording, numbers and time gap. A pair is flagged only above 90% wording match with agreeing numbers; the same sentence template with different numbers is deliberately let through.',
+         chips:['Arabic NLP','Multi-signal scoring','IBM Maximo · OSLC','SQLite'] },
+    ar:{ kicker:'شركة كدانة للتطوير · موسم الحج ٢٠٢٦', h2:'أن تُكتشف نفس المشكلة مرتين',
+         p:'في الموسم تصل آلاف بلاغات الصيانة بالعربية بصياغات مختلفة، وكثير منها يصف المشكلة نفسها. الخدمة التي بنيتها تستطلع Maximo عبر OSLC كل ١٥ ثانية، وتطبّع النص العربي، وتجمّع البلاغات حسب رمز الموقع، ثم تقيس كل زوج على الصياغة والأرقام والفارق الزمني. ولا يُرفع الزوج كمكرر إلا فوق ٩٠٪ تطابقاً في الصياغة مع اتفاق الأرقام، أما القالب نفسه بأرقام مختلفة فيُمرَّر عمداً.',
+         chips:['معالجة لغة عربية','تقييم متعدد الإشارات','IBM Maximo · OSLC','SQLite'] } },
+
+  { side:'b',
+    en:{ kicker:'2026 · built and led · internal project, company unnamed', h2:'Opportunities that stop getting lost',
+         p:'Requests for quotation and tenders piled up in one shared mailbox and were sorted by hand. The agent reads each email, extracts the account, business line, tender number and deadline, and recommends an action. It is designed to write to the CRM only after a person reviews it within an agreed response window. Extraction is prototyped and tested on real mailbox examples; the review step and the window are still being agreed with the business.',
+         flow:['Mailbox','Extraction','Human review · agreed window','CRM record'], human:2 },
+    ar:{ kicker:'٢٠٢٦ · بنيته وقدته · مشروع داخلي، اسم الشركة محجوب', h2:'فرص تجارية لا تضيع',
+         p:'طلبات العروض والمناقصات كانت تتكدس في بريد واحد وتُفرز يدوياً. الوكيل يقرأ كل رسالة ويستخرج العميل وخط الأعمال ورقم المناقصة والموعد النهائي ويقترح الإجراء. وهو مصمَّم ليكتب في نظام العملاء بعد مراجعة إنسان ضمن مهلة استجابة متفق عليها. مرحلة الاستخراج مجرَّبة على أمثلة حقيقية من البريد، أما خطوة المراجعة والمهلة فما زالتا قيد الاتفاق مع الجهة المعنية.',
+         flow:['البريد','الاستخراج','مراجعة بشرية · مهلة متفق عليها','سجل العملاء'], human:2 } },
+
+  { side:'a',
+    en:{ kicker:'Computer vision · 2024–2025', h2:'Teaching cameras to watch traffic, sites and shelves',
+         p:'Vehicle detection and tracking that keeps an ID across frames and turns road footage into counts and flow. A signal controller that spots an approaching ambulance and clears its path. Bunyan, an Aqarathon finalist, comparing drone capture against a BIM model to track construction progress. And a self-checkout that recognises products without barcodes.',
+         chips:['Object detection','Multi-object tracking','PyTorch','BIM'] },
+    ar:{ kicker:'رؤية حاسوبية · ٢٠٢٤–٢٠٢٥', h2:'تعليم الكاميرات مراقبة الطرق والمواقع والرفوف',
+         p:'كشف المركبات وتتبّعها مع حفظ رقم كل مركبة عبر الإطارات لتحويل تسجيلات الطرق إلى أعداد وتدفق. ومتحكّم إشارات يرصد سيارة إسعاف قادمة ويفتح لها المسار. وبنيان، المتأهل لنهائيات عقاراثون، يقارن تصوير الدرون بنموذج BIM لمتابعة تقدّم البناء. ونظام دفع ذاتي يتعرّف على المنتجات بلا باركود.',
+         chips:['كشف الأجسام','تتبع متعدد','PyTorch','BIM'] } },
+
+  { side:'b',
+    en:{ kicker:'Language & learning · 2023–2025', h2:'Arabic models for people, not benchmarks',
+         p:'Afqah, an ALLaM Challenge finalist, adapts explanations for autistic learners on SDAIA\'s Arabic model. Tahbeer helps people recite and memorise Qur\'an more accurately. EduMood reads classroom engagement from facial expression with DeepFace on FER-2013. And a job recommender that matches people to roles from their own words.',
+         chips:['ALLaM','DeepFace · FER-2013','Streamlit','Recommenders'] },
+    ar:{ kicker:'اللغة والتعلّم · ٢٠٢٣–٢٠٢٥', h2:'نماذج عربية لأجل الناس لا لأجل المقاييس',
+         p:'أفقه، المتأهل لنهائيات تحدي علّام، يكيّف الشرح للمتعلمين على طيف التوحد على نموذج علّام من سدايا. وتحبير يساعد على التلاوة والحفظ بدقة أعلى. وEduMood يقرأ تفاعل الصف من تعابير الوجه بـDeepFace المدرَّب على FER-2013. ونظام توصية وظائف يطابق الناس بالأدوار من كلماتهم هم.',
+         chips:['علّام','DeepFace · FER-2013','Streamlit','أنظمة توصية'] } },
+
+  { side:'a',
+    en:{ kicker:'Now', h2:'Where I am today',
+         p:'AI Continuous Improvement Engineer in a Quality, Warranty & CI department. I lead the intake project above, review improvement proposals and their charters before approval, and build the data work behind them in SAP and Power BI.',
+         facts:[['3.9/4','GPA · first-class honours'],['2026','BSc AI · Umm Al-Qura']],
+         links:[['ghala.m.mansour@gmail.com','mailto:ghala.m.mansour@gmail.com'],['LinkedIn','https://linkedin.com/in/ghala-mansour-975526275'],['GitHub','https://github.com/GhalaMansour']] },
+    ar:{ kicker:'اليوم', h2:'أين أنا الآن',
+         p:'مهندسة ذكاء اصطناعي للتحسين المستمر في إدارة الجودة والضمان والتحسين المستمر. أقود مشروع الاستقبال الذكي أعلاه، وأراجع مقترحات التحسين ووثائقها قبل اعتمادها، وأبني ما تحتاجه من عمل على البيانات في SAP وPower BI.',
+         facts:[['٣٫٩/٤','المعدل · مرتبة الشرف الأولى'],['٢٠٢٦','بكالوريوس ذكاء اصطناعي · أم القرى']],
+         links:[['ghala.m.mansour@gmail.com','mailto:ghala.m.mansour@gmail.com'],['LinkedIn','https://linkedin.com/in/ghala-mansour-975526275'],['GitHub','https://github.com/GhalaMansour']] } }
+];
+const RAIL = { en:['AI ENGINEER','JANAH · ARABIC UAV SEARCH & RESCUE','01 REPORT','02 PLAN','03 SEE','04 CONFIRM','HAJJ REPORTS · ARABIC NLP','COMMERCIAL INTAKE AGENT · BUILT AND LED','COMPUTER VISION','LANGUAGE & LEARNING','NOW'],
+               ar:['مهندسة ذكاء اصطناعي','جناح · بحث وإنقاذ بالدرون','٠١ البلاغ','٠٢ الخطة','٠٣ الرؤية','٠٤ التأكيد','بلاغات الحج','وكيل الفرص التجارية','رؤية حاسوبية','اللغة والتعلّم','اليوم'] };
+let LANG = (localStorage.getItem('ghala-lang') || 'en');
+
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+function renderStory() {
+  const story = document.getElementById('story');
+  story.innerHTML = STORY.map((b, i) => {
+    const c = b[LANG];
+    const parts = [`<p class="kicker">${esc(c.kicker)}</p>`];
+    if (c.h1) parts.push(`<h1>${esc(c.h1)}</h1>`);
+    if (c.h2) parts.push(`<h2>${esc(c.h2)}</h2>`);
+    if (c.lede) parts.push(`<p class="lede">${esc(c.lede)}</p>`);
+    if (c.p) parts.push(`<p>${esc(c.p)}</p>`);
+    if (c.facts) parts.push(`<ul class="facts">${c.facts.map(([v, l]) => `<li><b>${esc(v)}</b><span>${esc(l)}</span></li>`).join('')}</ul>`);
+    if (c.flow) parts.push(`<div class="flow">${c.flow.map((f, k) => `<span class="${c.human === k ? 'human' : ''}">${esc(f)}</span>`).join('<i>→</i>')}</div>`);
+    if (c.chips) parts.push(`<ul class="chips">${c.chips.map(t => `<li>${esc(t)}</li>`).join('')}</ul>`);
+    if (c.links) parts.push(`<div class="links">${c.links.map(([t, h]) => `<a href="${h}"${h.startsWith('http') ? ' target="_blank" rel="noopener"' : ''}>${esc(t)}</a>`).join('')}</div>`);
+    return `<section class="beat ${b.side}" data-beat="${i}"><div class="box">${parts.join('')}</div></section>`;
+  }).join('');
+}
+function applyLang(lang) {
+  LANG = lang;
+  const root = document.documentElement;
+  root.lang = lang; root.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.getElementById('brand').textContent = lang === 'ar' ? 'غلا منصور' : 'Ghala Mansour';
+  document.getElementById('langBtn').textContent = lang === 'ar' ? 'English' : 'العربية';
+  document.getElementById('cue').textContent = lang === 'ar' ? 'انزل' : 'SCROLL';
+  document.title = lang === 'ar' ? 'غلا منصور — مهندسة ذكاء اصطناعي' : 'Ghala Mansour — AI Engineer';
+  renderStory();
+  if (window.rebindBeats) window.rebindBeats();
+  if (window.applyTheme) window.applyTheme(document.documentElement.dataset.theme || 'dark');
+  try { localStorage.setItem('ghala-lang', lang); } catch (e) {}
+}
+renderStory();
+applyLang(LANG);
+document.getElementById('langBtn').addEventListener('click', () => applyLang(LANG === 'ar' ? 'en' : 'ar'));
+document.getElementById('themeBtn').addEventListener('click', () =>
+  window.applyTheme((document.documentElement.dataset.theme === 'dark') ? 'light' : 'dark'));
+window.RAIL = RAIL; window.getLang = () => LANG;
+</script>
+
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const canvas = document.getElementById('gl');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+renderer.setSize(innerWidth, innerHeight, false);
+const scene = new THREE.Scene();
+scene.fog = new THREE.Fog(0x0D1317, 44, 128);
+const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, .1, 400);
+const hemi = new THREE.HemisphereLight(0xD9E8EC, 0x0D1317, 1.0); scene.add(hemi);
+const key = new THREE.DirectionalLight(0xFFF6E8, 1.6); key.position.set(-6, 9, 8); scene.add(key);
+const warm = new THREE.DirectionalLight(0xFFB477, .55); warm.position.set(7, -3, -4); scene.add(warm);
+
+const ACCENT_MATS = [], COOL_MATS = [], LABELS = [];
+const SPACING = 26, at = i => -i * SPACING;
+
+/* ---------- helpers ---------- */
+const rounded = (w, h, r) => { const s = new THREE.Shape(), x = -w / 2, y = -h / 2;
+  s.moveTo(x + r, y); s.lineTo(x + w - r, y); s.quadraticCurveTo(x + w, y, x + w, y + r); s.lineTo(x + w, y + h - r);
+  s.quadraticCurveTo(x + w, y + h, x + w - r, y + h); s.lineTo(x + r, y + h); s.quadraticCurveTo(x, y + h, x, y + h - r);
+  s.lineTo(x, y + r); s.quadraticCurveTo(x, y, x + r, y); return s; };
+
+// a flat panel of type — drawn, never photographed
+function typePanel(text, opts = {}) {
+  const { w = 3.2, h = .9, size = 56, align = 'right', rtl = true, ink = '#EDE8DE', bg = 'rgba(255,255,255,0.05)',
+          border = null, mono = false, pad = 34 } = opts;
+  const PX = 1024, PY = Math.round(PX * h / w);
+  const c = document.createElement('canvas'); c.width = PX; c.height = PY;
+  const x = c.getContext('2d');
+  if (bg) { x.fillStyle = bg; x.fillRect(0, 0, PX, PY); }
+  if (border) { x.strokeStyle = border; x.lineWidth = 5; x.strokeRect(2.5, 2.5, PX - 5, PY - 5); }
+  x.fillStyle = ink;
+  x.font = `${mono ? '500' : '400'} ${size}px ${mono ? '"IBM Plex Mono", monospace' : '"Thmanyah Sans", "IBM Plex Sans Arabic", sans-serif'}`;
+  x.direction = rtl ? 'rtl' : 'ltr';
+  x.textAlign = align; x.textBaseline = 'middle';
+  x.fillText(text, align === 'right' ? PX - pad : align === 'center' ? PX / 2 : pad, PY / 2);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4;
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ map: t, transparent: true }));
+  m.userData.redraw = () => {};
+  return m;
+}
+function buildDrone(s = 1) {
+  const g = new THREE.Group();
+  const white = new THREE.MeshStandardMaterial({ color: 0xF2F4F7, roughness: .4, metalness: .06 });
+  const grey = new THREE.MeshStandardMaterial({ color: 0x39404B, roughness: .55, metalness: .2 });
+  const dark = new THREE.MeshStandardMaterial({ color: 0x14181E, roughness: .3, metalness: .5 });
+  const shell = new THREE.Mesh(new THREE.ExtrudeGeometry(rounded(.42, .54, .13), { depth: .1, bevelEnabled: true, bevelThickness: .04, bevelSize: .03, bevelSegments: 4, curveSegments: 10 }), white);
+  shell.rotation.x = -Math.PI / 2; g.add(shell);
+  const belly = new THREE.Mesh(new THREE.ExtrudeGeometry(rounded(.34, .46, .1), { depth: .06, bevelEnabled: false }), grey);
+  belly.rotation.x = -Math.PI / 2; belly.position.y = -.08; g.add(belly);
+  const lens = new THREE.Mesh(new THREE.SphereGeometry(.04, 18, 12), new THREE.MeshStandardMaterial({ color: 0x0A1526, roughness: .05, metalness: .9 }));
+  lens.position.set(0, .02, -.33); g.add(lens);
+  g.userData.props = [];
+  [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([sx, sz], i) => {
+    const ax = sx * .46, az = sz * .46;
+    const arm = new THREE.Mesh(new THREE.BoxGeometry(.08, .05, .46), grey); arm.position.set(sx * .25, 0, sz * .25); arm.rotation.y = Math.atan2(sx, sz); g.add(arm);
+    const guard = new THREE.Mesh(new THREE.TorusGeometry(.25, .022, 10, 36), grey); guard.rotation.x = Math.PI / 2; guard.position.set(ax, .01, az); g.add(guard);
+    const motor = new THREE.Mesh(new THREE.CylinderGeometry(.05, .055, .09, 16), dark); motor.position.set(ax, .02, az); g.add(motor);
+    const prop = new THREE.Group(); prop.position.set(ax, .08, az);
+    for (let b = 0; b < 2; b++) { const bl = new THREE.Mesh(new THREE.BoxGeometry(.4, .012, .045), new THREE.MeshStandardMaterial({ color: 0xC9CFD8, roughness: .5 })); bl.rotation.y = b * Math.PI / 2 + .25; prop.add(bl); }
+    prop.userData.dir = i === 0 || i === 3 ? 1 : -1; g.add(prop); g.userData.props.push(prop);
+  });
+  g.scale.setScalar(s); return g;
+}
+const person = (h = .62, col = 0x9FB0A8) => {              // a stand-in figure, not a photo
+  const g = new THREE.Group();
+  const mat = new THREE.MeshStandardMaterial({ color: col, roughness: .6, metalness: .05 });
+  const body = new THREE.Mesh(new THREE.CapsuleGeometry(h * .17, h * .52, 6, 12), mat); body.position.y = h * .42; g.add(body);
+  const head = new THREE.Mesh(new THREE.SphereGeometry(h * .16, 14, 10), mat); head.position.y = h * .9; g.add(head);
+  g.userData.mat = mat; return g;
+};
+const wire = (geo, color, opacity = 1) => {
+  const m = new THREE.LineBasicMaterial({ color, transparent: true, opacity });
+  return new THREE.LineSegments(new THREE.EdgesGeometry(geo), m);
+};
+
+/* ---------- 0 · signature: three strands of work braided together ---------- */
+const g0 = new THREE.Group(); g0.position.z = at(0); scene.add(g0);
+{
+  const strands = [];
+  const cols = [0xE8B45C, 0x6FD3C6, 0xF08BA0];
+  for (let s = 0; s < 3; s++) {
+    const pts = [];
+    for (let i = 0; i <= 160; i++) {
+      const t = i / 160, a = t * Math.PI * 4 + s * 2.1;
+      pts.push(new THREE.Vector3(Math.cos(a) * (1.5 - t * .3), -3 + t * 6, Math.sin(a) * (1.5 - t * .3)));
+    }
+    const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),
+      new THREE.LineBasicMaterial({ color: cols[s], transparent: true, opacity: .5 }));
+    g0.add(line); strands.push(line);
+    const bead = new THREE.Mesh(new THREE.SphereGeometry(.07, 14, 10), new THREE.MeshStandardMaterial({ color: cols[s], roughness: .3, emissive: cols[s], emissiveIntensity: .4 }));
+    g0.add(bead); strands.push(bead);
+  }
+  const field = new THREE.Points(new THREE.BufferGeometry().setAttribute('position',
+    new THREE.Float32BufferAttribute(Array.from({ length: 700 * 3 }, () => (Math.random() - .5) * 11), 3)),
+    new THREE.PointsMaterial({ color: 0xBFC9C4, size: .035, transparent: true, opacity: .45 }));
+  g0.add(field);
+  g0.userData = { strands, field };
+}
+
+/* ---------- 1 · Janah: the aircraft and its search volume ---------- */
+const g1 = new THREE.Group(); g1.position.z = at(1); scene.add(g1);
+{
+  const drone = buildDrone(1.5); drone.position.y = .9; g1.add(drone);
+  const cone = new THREE.Mesh(new THREE.ConeGeometry(1.5, 2.6, 44, 1, true),
+    new THREE.MeshBasicMaterial({ color: 0x6FD3C6, transparent: true, opacity: .09, side: THREE.DoubleSide, depthWrite: false }));
+  cone.position.y = -.5; g1.add(cone); COOL_MATS.push(cone.material);
+  const ground = new THREE.GridHelper(13, 26, 0x2C4A46, 0x22332F);
+  ground.material.transparent = true; ground.material.opacity = .5; ground.position.y = -1.85; g1.add(ground);
+  const sweep = new THREE.Mesh(new THREE.RingGeometry(1.2, 1.26, 72), new THREE.MeshBasicMaterial({ color: 0xE8B45C, transparent: true, side: THREE.DoubleSide }));
+  sweep.rotation.x = -Math.PI / 2; sweep.position.y = -1.83; g1.add(sweep); ACCENT_MATS.push(sweep.material);
+  const figures = [[-2.1, -1.3], [1.7, .9], [2.6, -1.9], [-1.2, 2.2]].map(([x, z]) => {
+    const f = person(.7, 0x8FA09A); f.position.set(x, -1.85, z); g1.add(f); return f;
+  });
+  g1.userData = { drone, cone, sweep, figures };
+}
+
+/* ---------- 2 · Report: an Arabic sentence breaking into fields ---------- */
+const g2 = new THREE.Group(); g2.position.z = at(2); scene.add(g2);
+{
+  const sentence = typePanel('ولد عمره ٧ سنوات، لابس قميص أحمر، آخر مكان شوفناه عند الساحة', { w: 4.6, h: 1.15, size: 46, bg: 'rgba(255,255,255,0.06)', border: 'rgba(255,255,255,0.18)' });
+  sentence.position.set(0, 1.5, 0); g2.add(sentence);
+  const fields = [['العمر', '٧ سنوات'], ['الملابس', 'قميص أحمر'], ['الموقع', 'الساحة'], ['الحالة', 'بلاغ جديد']].map(([k, v], i) => {
+    const row = new THREE.Group();
+    const kp = typePanel(k, { w: 1.25, h: .46, size: 40, ink: '#9FB4AE', bg: null });
+    const vp = typePanel(v, { w: 2.1, h: .46, size: 40, bg: 'rgba(111,211,198,0.10)', border: 'rgba(111,211,198,0.5)' });
+    kp.position.x = 1.75; vp.position.x = -.3; row.add(kp, vp);
+    row.position.set(0, .2 - i * .62, -.2); g2.add(row);
+    COOL_MATS.push(vp.material);
+    return row;
+  });
+  g2.userData = { sentence, fields };
+}
+
+/* ---------- 3 · Plan: a bounded mission path ---------- */
+const g3 = new THREE.Group(); g3.position.z = at(3); scene.add(g3);
+{
+  const pts = [];
+  for (let i = 0; i <= 140; i++) { const t = i / 140, a = t * Math.PI * 3.4;
+    pts.push(new THREE.Vector3(Math.cos(a) * (2.4 - t * .9), -1.3 + t * 2.4, Math.sin(a) * (2.4 - t * .9))); }
+  const path = new THREE.CatmullRomCurve3(pts);
+  const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints(path.getPoints(260)),
+    new THREE.LineBasicMaterial({ color: 0x8FA8F0, transparent: true, opacity: .6 }));
+  g3.add(line); COOL_MATS.push(line.material);
+  const cage = wire(new THREE.BoxGeometry(6, 4.1, 6), 0xE8B45C, .3); g3.add(cage); ACCENT_MATS.push(cage.material);
+  const drone = buildDrone(1.05); g3.add(drone);
+  const waypoints = [0, .25, .5, .75].map(t => {
+    const m = new THREE.Mesh(new THREE.OctahedronGeometry(.11), new THREE.MeshStandardMaterial({ color: 0x8FA8F0, roughness: .3, emissive: 0x24406B, emissiveIntensity: .5 }));
+    m.position.copy(path.getPoint(t)); g3.add(m); return m;
+  });
+  const limit = typePanel('safety envelope · max alt 12 m', { w: 2.9, h: .4, size: 34, mono: true, rtl: false, align: 'left', ink: '#E8B45C', bg: null });
+  limit.position.set(0, 2.4, 0); g3.add(limit);
+  g3.userData = { path, drone, cage, waypoints, limit };
+}
+
+/* ---------- 4 · See: detection and matching over a crowd ---------- */
+const g4 = new THREE.Group(); g4.position.z = at(4); scene.add(g4);
+{
+  const crowd = [];
+  for (let i = 0; i < 11; i++) {
+    const a = (i / 11) * Math.PI * 2, r = 1.1 + (i % 3) * .75;
+    const f = person(.75, i === 4 ? 0xE8B45C : 0x7E8E89);
+    f.position.set(Math.cos(a) * r * 1.5, -1.5, Math.sin(a) * r);
+    g4.add(f); crowd.push(f);
+  }
+  const target = crowd[4];
+  const box = wire(new THREE.BoxGeometry(.55, .95, .55), 0x6FD3C6, 0); g4.add(box); COOL_MATS.push(box.material);
+  const conf = typePanel('match 0.91 · clothing ✓', { w: 2.2, h: .36, size: 32, mono: true, rtl: false, align: 'left', ink: '#6FD3C6', bg: 'rgba(13,19,23,0.75)' });
+  conf.material.opacity = 0; g4.add(conf);
+  const beam = new THREE.Mesh(new THREE.PlaneGeometry(7, .05), new THREE.MeshBasicMaterial({ color: 0x6FD3C6, transparent: true, opacity: .5 }));
+  beam.rotation.x = -Math.PI / 2; beam.position.y = -1.4; g4.add(beam); COOL_MATS.push(beam.material);
+  const floor = new THREE.GridHelper(11, 22, 0x2C4A46, 0x22332F); floor.material.transparent = true; floor.material.opacity = .45; floor.position.y = -1.52; g4.add(floor);
+  g4.userData = { crowd, target, box, conf, beam };
+}
+
+/* ---------- 5 · Confirm: three candidates, one human decision ---------- */
+const g5 = new THREE.Group(); g5.position.z = at(5); scene.add(g5);
+{
+  const cards = [0, 1, 2].map(i => {
+    const grp = new THREE.Group();
+    const plate = new THREE.Mesh(new THREE.ExtrudeGeometry(rounded(1.4, 1.9, .1), { depth: .04, bevelEnabled: false }),
+      new THREE.MeshStandardMaterial({ color: i === 1 ? 0x20302C : 0x1B2328, roughness: .5 }));
+    grp.add(plate);
+    const fig = person(.9, i === 1 ? 0xE8B45C : 0x6E7D78); fig.position.set(0, -.55, .1); grp.add(fig);
+    const score = typePanel(['0.62', '0.91', '0.48'][i], { w: .9, h: .3, size: 30, mono: true, rtl: false, align: 'center', ink: i === 1 ? '#E8B45C' : '#9AA7A2', bg: null });
+    score.position.set(0, .78, .06); grp.add(score);
+    grp.position.set((i - 1) * 1.75, .1, -i * .18);
+    g5.add(grp); return grp;
+  });
+  const stamp = typePanel('rescue team confirmed', { w: 2.8, h: .42, size: 34, mono: true, rtl: false, align: 'center', ink: '#0D1317', bg: '#E8B45C' });
+  stamp.position.set(0, -1.5, .3); stamp.material.opacity = 0; g5.add(stamp);
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(.95, .025, 12, 60), new THREE.MeshBasicMaterial({ color: 0xE8B45C, transparent: true, opacity: 0 }));
+  ring.position.set(0, .1, .2); g5.add(ring); ACCENT_MATS.push(ring.material);
+  g5.userData = { cards, stamp, ring };
+}
+
+/* ---------- 6 · Traffic: trajectories lifted off the road ---------- */
+const g6 = new THREE.Group(); g6.position.z = at(8); scene.add(g6);
+{
+  const road = new THREE.Mesh(new THREE.PlaneGeometry(9, 4.4, 1, 1), new THREE.MeshStandardMaterial({ color: 0x1A2227, roughness: .95 }));
+  road.rotation.x = -Math.PI / 2; road.position.y = -1.4; g6.add(road);
+  for (let l = -1; l <= 1; l++) {
+    const dash = new THREE.Group();
+    for (let d = -4; d <= 4; d++) {
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(.5, .07), new THREE.MeshBasicMaterial({ color: 0x55615F }));
+      m.rotation.x = -Math.PI / 2; m.position.set(d, -1.39, l * 1.3); dash.add(m);
+    }
+    g6.add(dash);
+  }
+  const cars = [0, 1, 2, 3, 4].map(i => {
+    const grp = new THREE.Group();
+    const body = new THREE.Mesh(new THREE.BoxGeometry(.62, .26, .32), new THREE.MeshStandardMaterial({ color: [0xA487F5, 0x6FD3C6, 0xE8B45C, 0xF08BA0, 0x8FA8F0][i], roughness: .45, metalness: .2 }));
+    body.position.y = .13; grp.add(body);
+    const cab = new THREE.Mesh(new THREE.BoxGeometry(.3, .18, .28), body.material); cab.position.set(-.05, .3, 0); grp.add(cab);
+    const tag = typePanel('id ' + (11 + i * 7), { w: .7, h: .22, size: 26, mono: true, rtl: false, align: 'center', ink: '#D8E2DE', bg: 'rgba(13,19,23,.7)' });
+    tag.position.set(0, .72, 0); grp.add(tag);
+    const trail = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3()]),
+      new THREE.LineBasicMaterial({ color: 0xA487F5, transparent: true, opacity: .55 }));
+    g6.add(trail); COOL_MATS.push(trail.material);
+    grp.userData = { lane: (i % 3) - 1, speed: .9 + (i % 4) * .22, trail, x: -4 + i * 1.8 };
+    grp.position.set(grp.userData.x, -1.4, grp.userData.lane * 1.3);
+    g6.add(grp); return grp;
+  });
+  g6.userData = { cars };
+}
+
+/* ---------- 7 · Hajj: duplicate reports collapsing into one ---------- */
+const g7 = new THREE.Group(); g7.position.z = at(6); scene.add(g7);
+{
+  const texts = ['المكيف ما يبرد في المخيم', 'مكيف الخيمة معطّل', 'مكيف خربان بالمخيم', 'تسريب ماء عند المدخل', 'الإنارة مطفية بالممر'];
+  const dup = [0, 1, 2];
+  const cards = texts.map((t, i) => {
+    const isDup = dup.includes(i);
+    const m = typePanel(t, { w: 3.3, h: .78, size: 42,
+      bg: isDup ? 'rgba(232,180,92,0.10)' : 'rgba(255,255,255,0.05)',
+      border: isDup ? 'rgba(232,180,92,0.55)' : 'rgba(255,255,255,0.16)' });
+    const a = (i / texts.length) * Math.PI * 2;
+    m.position.set(Math.cos(a) * 1.9, Math.sin(a) * 1.5, -i * .35);
+    m.userData = { home: m.position.clone(), isDup, i };
+    g7.add(m); if (isDup) ACCENT_MATS.push(m.material);
+    return m;
+  });
+  const merged = typePanel('بلاغ موحّد: عطل تكييف · المخيم', { w: 3.6, h: .8, size: 44, bg: 'rgba(232,180,92,0.16)', border: 'rgba(232,180,92,0.8)' });
+  merged.position.set(0, 0, .4); merged.material.opacity = 0; g7.add(merged);
+  const counter = typePanel('3 duplicates → 1', { w: 2.2, h: .34, size: 30, mono: true, rtl: false, align: 'center', ink: '#E8B45C', bg: null });
+  counter.position.set(0, -1.5, .4); counter.material.opacity = 0; g7.add(counter);
+  g7.userData = { cards, merged, counter };
+}
+
+/* ---------- 8 · SAM: an email becomes a reviewed opportunity ---------- */
+const g8 = new THREE.Group(); g8.position.z = at(7); scene.add(g8);
+{
+  const mail = new THREE.Group();
+  const plate = new THREE.Mesh(new THREE.ExtrudeGeometry(rounded(3.1, 2.1, .08), { depth: .03, bevelEnabled: false }),
+    new THREE.MeshStandardMaterial({ color: 0x1B2328, roughness: .55 }));
+  mail.add(plate);
+  const subject = typePanel('RFQ — chiller replacement, 3 units', { w: 2.7, h: .34, size: 30, mono: true, rtl: false, align: 'left', ink: '#E7EFEA', bg: null });
+  subject.position.set(0, .72, .04); mail.add(subject);
+  for (let i = 0; i < 5; i++) {
+    const bar = new THREE.Mesh(new THREE.PlaneGeometry(2.4 - i * .3, .07), new THREE.MeshBasicMaterial({ color: 0x3B4A4F }));
+    bar.position.set(-(i * .15), .28 - i * .3, .04); mail.add(bar);
+  }
+  mail.position.set(-1.6, .1, 0); mail.rotation.y = .3; g8.add(mail);
+  const chips = [['account', 'Diriyah'], ['line of business', 'Controls'], ['tender no.', 'TND-4471'], ['deadline', '12 Oct'], ['action', 'create opportunity']].map(([k, v], i) => {
+    const c = typePanel(k + ' · ' + v, { w: 2.5, h: .38, size: 28, mono: true, rtl: false, align: 'left',
+      ink: '#9FD9C2', bg: 'rgba(63,190,134,0.10)', border: 'rgba(63,190,134,0.45)' });
+    c.position.set(2.2, 1.2 - i * .5, .1); c.rotation.y = -.26; c.material.opacity = 0;
+    g8.add(c); COOL_MATS.push(c.material); c.userData.i = i; return c;
+  });
+  const gate = typePanel('human review · SLA 4 h', { w: 2.4, h: .4, size: 30, mono: true, rtl: false, align: 'center', ink: '#0D1317', bg: '#3FBE86' });
+  gate.position.set(2.2, -1.5, .2); gate.material.opacity = 0; g8.add(gate);
+  g8.userData = { mail, chips, gate };
+}
+
+/* ---------- 9 · Other work: four small machines, one per project ---------- */
+const g9 = new THREE.Group(); g9.position.z = at(9); scene.add(g9);
+{
+  // Bunyan — a structure rising floor by floor
+  const bunyan = new THREE.Group(); bunyan.position.set(-2.4, .4, 0);
+  const floors = [];
+  for (let i = 0; i < 6; i++) {
+    const geo = new THREE.BoxGeometry(.95 - i * .05, .17, .95 - i * .05);
+    const f = wire(geo, 0x6FD3C6, .9); f.position.y = -.7 + i * .2; f.userData.i = i; bunyan.add(f); floors.push(f); COOL_MATS.push(f.material);
+  }
+  const miniDrone = buildDrone(.3); bunyan.add(miniDrone);
+  g9.add(bunyan);
+
+  // Afqah — Arabic words orbiting a core
+  const afqah = new THREE.Group(); afqah.position.set(.2, .5, -.6);
+  const core = new THREE.Mesh(new THREE.IcosahedronGeometry(.3, 1), new THREE.MeshStandardMaterial({ color: 0xF08BA0, roughness: .3, flatShading: true }));
+  afqah.add(core);
+  const words = ['اقرأ', 'افهم', 'جرّب'].map((w, i) => {
+    const m = typePanel(w, { w: .85, h: .38, size: 40, align: 'center', ink: '#FFD9E1', bg: 'rgba(240,139,160,0.12)', border: 'rgba(240,139,160,0.5)' });
+    m.userData.a = (i / 3) * Math.PI * 2; afqah.add(m); return m;
+  });
+  g9.add(afqah);
+
+  // EduMood — a face mesh that changes expression
+  const mood = new THREE.Group(); mood.position.set(2.5, .5, -.3);
+  const faceGeo = new THREE.IcosahedronGeometry(.5, 2);
+  const facePts = new THREE.Points(faceGeo, new THREE.PointsMaterial({ color: 0xFFC2D2, size: .028 }));
+  const faceWire = new THREE.LineSegments(new THREE.WireframeGeometry(faceGeo), new THREE.LineBasicMaterial({ color: 0xF08BA0, transparent: true, opacity: .22 }));
+  mood.add(facePts, faceWire);
+  const faceBase = faceGeo.attributes.position.array.slice();
+  g9.add(mood);
+
+  // Self-checkout — items crossing a scan line
+  const belt = new THREE.Group(); belt.position.set(0, -1.5, .3);
+  const strip = new THREE.Mesh(new THREE.BoxGeometry(5.4, .08, .9), new THREE.MeshStandardMaterial({ color: 0x1A2227, roughness: .9 }));
+  belt.add(strip);
+  const items = [0, 1, 2].map(i => {
+    const geo = [new THREE.CylinderGeometry(.14, .14, .3, 18), new THREE.BoxGeometry(.26, .3, .2), new THREE.SphereGeometry(.16, 18, 14)][i];
+    const m = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: [0xE8B45C, 0x8FA8F0, 0x6FD3C6][i], roughness: .45 }));
+    m.position.set(-2 + i * 1.5, .22, 0); belt.add(m);
+    const b = wire(new THREE.BoxGeometry(.4, .42, .4), 0x6FD3C6, 0); belt.add(b); COOL_MATS.push(b.material);
+    return { m, b };
+  });
+  const scan = new THREE.Mesh(new THREE.PlaneGeometry(.05, .95), new THREE.MeshBasicMaterial({ color: 0x6FD3C6, transparent: true, opacity: .8, side: THREE.DoubleSide }));
+  scan.rotation.y = Math.PI / 2; scan.position.set(0, .3, 0); belt.add(scan); COOL_MATS.push(scan.material);
+  g9.add(belt);
+
+  g9.userData = { bunyan, floors, miniDrone, afqah, core, words, facePts, faceGeo, faceBase, mood, items, scan };
+}
+
+/* ---------- 10 · Now: the aircraft turns toward you ---------- */
+const g10 = new THREE.Group(); g10.position.z = at(10); scene.add(g10);
+{
+  const drone = buildDrone(1.9); drone.position.y = .2; g10.add(drone);
+  const halo = new THREE.Mesh(new THREE.RingGeometry(2.1, 2.14, 80), new THREE.MeshBasicMaterial({ color: 0xE8B45C, transparent: true, opacity: .3, side: THREE.DoubleSide }));
+  halo.position.set(0, .2, -2.4); g10.add(halo); ACCENT_MATS.push(halo.material);
+  const dust = new THREE.Points(new THREE.BufferGeometry().setAttribute('position',
+    new THREE.Float32BufferAttribute(Array.from({ length: 400 * 3 }, () => (Math.random() - .5) * 9), 3)),
+    new THREE.PointsMaterial({ color: 0xBFC9C4, size: .03, transparent: true, opacity: .4 }));
+  g10.add(dust);
+  g10.userData = { drone, halo, dust };
+}
+
+/* ---------- layout: art always opposite the text column ---------- */
+const GROUPS = [g0, g1, g2, g3, g4, g5, g7, g8, g6, g9, g10];   // hajj → agent → vision → language
+// centre each scene and keep it inside its half of the screen
+GROUPS.forEach(g => {
+  const box = new THREE.Box3().setFromObject(g);
+  const cx = (box.min.x + box.max.x) / 2;
+  if (isFinite(cx)) g.children.forEach(c => { c.position.x -= cx; });
+  const w = box.max.x - box.min.x;
+  g.userData.fit = isFinite(w) && w > 6.4 ? 6.4 / w : 1;
+});
+let beats = [...document.querySelectorAll('.beat')];
+const dirSign = () => (document.documentElement.dir === 'rtl' ? -1 : 1);
+function assignSides() {
+  beats.forEach((b, i) => { if (GROUPS[i]) GROUPS[i].userData.side = (b.classList.contains('a') ? 1 : -1) * dirSign(); });
+}
+function layoutGroups() {
+  const narrow = innerWidth < 900;
+  const halfAt = d => Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * d * camera.aspect;
+  GROUPS.forEach((g, i) => {
+    const side = g.userData.side || 1;
+    g.scale.setScalar((narrow ? .58 : .98) * (g.userData.fit || 1));
+    const x = narrow ? 0 : side * Math.min(halfAt(9) * .52, 4.6);
+    g.position.set(x, narrow ? 2.8 : 0, at(i));
+  });
+}
+assignSides(); layoutGroups();
+window.rebindBeats = () => {
+  beats = [...document.querySelectorAll('.beat')];
+  beats.forEach(b => io.observe(b));
+  assignSides(); layoutGroups(); onScroll();
+};
+
+/* ---------- themes ---------- */
+const THEMES = {
+  dark:  { bg: 0x0D1317, fog: [0x0D1317, 44, 128], hemi: [0xD9E8EC, 0x0D1317, 1.0], key: [0xFFF6E8, 1.6], warm: [0xFFB477, .55], vig: '13,19,23' },
+  light: { bg: 0xF5F1E9, fog: [0xF5F1E9, 42, 132], hemi: [0xFFFFFF, 0xE4DCCE, 1.25], key: [0xFFFBF2, 1.65], warm: [0xE8B45C, .4], vig: '245,241,233' }
+};
+function applyTheme(mode) {
+  const th = THEMES[mode];
+  document.documentElement.dataset.theme = mode;
+  document.querySelector('.vignette').style.background =
+    'radial-gradient(120% 80% at 50% 50%, rgba(' + th.vig + ',0) 42%, rgba(' + th.vig + ',.8) 100%)';
+  document.body.style.background = mode === 'dark'
+    ? 'linear-gradient(180deg,#0D1317 0%,#141D22 55%,#0D1317 100%)'
+    : 'linear-gradient(180deg,#F5F1E9 0%,#FBF8F2 55%,#F2EDE3 100%)';
+  renderer.setClearColor(th.bg, 1);
+  scene.fog.color.setHex(th.fog[0]); scene.fog.near = th.fog[1]; scene.fog.far = th.fog[2];
+  hemi.color.setHex(th.hemi[0]); hemi.groundColor.setHex(th.hemi[1]); hemi.intensity = th.hemi[2];
+  key.color.setHex(th.key[0]); key.intensity = th.key[1];
+  warm.color.setHex(th.warm[0]); warm.intensity = th.warm[1];
+  const b = document.getElementById('themeBtn');
+  if (b) b.textContent = mode === 'dark' ? (document.documentElement.lang === 'ar' ? 'فاتح' : 'Light') : (document.documentElement.lang === 'ar' ? 'غامق' : 'Dark');
+  try { localStorage.setItem('ghala-mode', mode); } catch (e) {}
+}
+window.applyTheme = applyTheme;
+let savedMode = 'dark'; try { savedMode = localStorage.getItem('ghala-mode') || 'dark'; } catch (e) {}
+applyTheme(savedMode);
+
+/* ---------- a colour per topic ---------- */
+const PALETTES = {
+  // A · dune: warm charcoal ground, gold spine, cool support
+  a: [
+    { d: [0xE4AE5E, 0x8C8275], l: [0x9A6A14, 0x6F675B] },  // 0 opening
+    { d: [0x5FC9BC, 0x6E8E92], l: [0x12736A, 0x5C6E70] },  // 1 Janah
+    { d: [0x5FC9BC, 0x6E8E92], l: [0x12736A, 0x5C6E70] },  // 2 report
+    { d: [0x8EA6EE, 0x76799B], l: [0x3B4FA8, 0x5E6179] },  // 3 plan
+    { d: [0x5FC9BC, 0x6E8E92], l: [0x12736A, 0x5C6E70] },  // 4 see
+    { d: [0xE4AE5E, 0x97847B], l: [0x9A6A14, 0x6F675B] },  // 5 confirm
+    { d: [0xA98BF2, 0x7C7893], l: [0x5B3BB0, 0x615C75] },  // 6 traffic
+    { d: [0xE0A24E, 0x938871], l: [0x8E6411, 0x6E6557] },  // 7 hajj
+    { d: [0x4CC48D, 0x6F8B81], l: [0x11724E, 0x566B61] },  // 8 SAM
+    { d: [0xEF8FA4, 0x998089], l: [0xA83C58, 0x6E5F65] },  // 9 more
+    { d: [0xE4AE5E, 0x8C8275], l: [0x9A6A14, 0x6F675B] }   // 10 now
+  ],
+  // B · lab: cooler ground, mint spine, amber punctuation
+  b: [
+    { d: [0x4FD6C0, 0x72908C], l: [0x0C7363, 0x566B67] },
+    { d: [0x4FD6C0, 0x72908C], l: [0x0C7363, 0x566B67] },
+    { d: [0x7FD1F0, 0x6F8894], l: [0x19627E, 0x566770] },
+    { d: [0x8EA6EE, 0x76799B], l: [0x3B4FA8, 0x5E6179] },
+    { d: [0x4FD6C0, 0x72908C], l: [0x0C7363, 0x566B67] },
+    { d: [0xF0A868, 0x94867B], l: [0xA15A12, 0x6E6459] },
+    { d: [0xA98BF2, 0x7C7893], l: [0x5B3BB0, 0x615C75] },
+    { d: [0xF0A868, 0x94867B], l: [0xA15A12, 0x6E6459] },
+    { d: [0x4CC48D, 0x6F8B81], l: [0x11724E, 0x566B61] },
+    { d: [0xEF8FA4, 0x998089], l: [0xA83C58, 0x6E5F65] },
+    { d: [0x4FD6C0, 0x72908C], l: [0x0C7363, 0x566B67] }
+  ]
+};
+const PAL = (new URLSearchParams(location.search).get('palette') || 'a').toLowerCase() === 'b' ? 'b' : 'a';
+const TOPIC = PALETTES[PAL];
+const hexStr = c => '#' + c.toString(16).padStart(6, '0');
+const mixHex = (a, b, t) => {
+  const r = Math.round(((a >> 16) & 255) * (1 - t) + ((b >> 16) & 255) * t);
+  const g = Math.round(((a >> 8) & 255) * (1 - t) + ((b >> 8) & 255) * t);
+  const bl = Math.round((a & 255) * (1 - t) + (b & 255) * t);
+  return (r << 16) | (g << 8) | bl;
+};
+const glowEl = document.getElementById('glow');
+function paintTopic(sm) {
+  const mode = document.documentElement.dataset.theme === 'light' ? 'l' : 'd';
+  const i = Math.max(0, Math.min(TOPIC.length - 1, Math.floor(sm))), j = Math.min(TOPIC.length - 1, i + 1), t = sm - i;
+  const accent = mixHex(TOPIC[i][mode][0], TOPIC[j][mode][0], t);
+  const cool = mixHex(TOPIC[i][mode][1], TOPIC[j][mode][1], t);
+  document.documentElement.style.setProperty('--accent', hexStr(accent));
+  document.documentElement.style.setProperty('--accent-soft', hexStr(accent) + (mode === 'l' ? '1F' : '26'));
+  // the 3D scene keeps the bright variant in both themes so geometry stays readable
+  const sceneAccent = mixHex(TOPIC[i].d[0], TOPIC[j].d[0], t);
+  const sceneCool = mode === 'l' ? mixHex(TOPIC[i].l[1], TOPIC[j].l[1], t) : cool;
+  const g = GROUPS[Math.round(sm)];
+  if (glowEl) glowEl.style.setProperty('--gx', (g && g.userData.side < 0 ? '26%' : '74%'));
+  ACCENT_MATS.forEach(m => m.color.setHex(mode === 'l' ? accent : sceneAccent));
+  COOL_MATS.forEach(m => m.color.setHex(sceneCool));
+}
+
+/* ---------- scroll driving ---------- */
+const bar = document.getElementById('bar'), rail = document.getElementById('rail'), cue = document.getElementById('cue');
+const NAMES = () => (window.RAIL ? window.RAIL[window.getLang()] : []);
+let target = 0, smooth = 0;
+const io = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('in', e.isIntersecting)), { threshold: .35, rootMargin: '-10% 0px -20%' });
+beats.forEach(b => io.observe(b));
+function onScroll() {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  const p = max > 0 ? scrollY / max : 0;
+  target = p * (beats.length - 1);
+  if (bar) bar.style.width = (p * 100).toFixed(2) + '%';
+  if (cue) cue.style.opacity = p > .02 ? 0 : 1;
+}
+addEventListener('scroll', onScroll, { passive: true });
+addEventListener('resize', () => {
+  renderer.setSize(innerWidth, innerHeight, false);
+  camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); layoutGroups(); onScroll();
+});
+camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+onScroll();
+
+let mx = 0, my = 0, smx = 0, smy = 0;
+addEventListener('pointermove', e => { mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; }, { passive: true });
+const k60 = (b, dt) => 1 - Math.pow(1 - b, dt / 16.67);
+const near = (i, s) => Math.max(0, 1 - Math.abs(s - i));
+const fade = (mat, to, dt) => { mat.opacity += (to - mat.opacity) * k60(.1, dt); mat.transparent = true; };
+
+let last = performance.now(), lastName = -1;
+function frame(now) {
+  const dt = Math.min(64, now - last); last = now;
+  smooth += (target - smooth) * k60(reduce ? 1 : .075, dt);
+  smx += (mx - smx) * k60(.05, dt); smy += (my - smy) * k60(.05, dt);
+  const t = reduce ? 8.4 : now / 1000;   // a fixed pose when motion is reduced
+
+  camera.position.set(smx * 1.3, -smy * .8 + Math.sin(smooth * 1.7) * .2, -smooth * SPACING + 7);
+  camera.rotation.set(-smy * .05, smx * .1, Math.sin(smooth * .9) * .01);
+
+  // 0 · braided strands
+  g0.rotation.y = t * .12 + smx * .3;
+  g0.userData.strands.forEach((o, i) => { if (o.isMesh) {
+    const s = i / 2, a = (t * .35 + s * .7) % 1;
+    o.position.set(Math.cos(a * Math.PI * 4 + s * 2.1) * (1.5 - a * .3), -3 + a * 6, Math.sin(a * Math.PI * 4 + s * 2.1) * (1.5 - a * .3));
+  } });
+  g0.userData.field.rotation.y = -t * .04;
+
+  // 1 · Janah
+  const u1 = g1.userData;
+  u1.drone.position.y = .9 + Math.sin(t * 1.5) * .06;
+  u1.drone.rotation.y = -.5 + Math.sin(t * .3) * .6 + smx * .3;
+  u1.drone.userData.props.forEach(p => p.rotation.y += .55 * p.userData.dir);
+  u1.cone.material.opacity = .07 + .04 * Math.sin(t * 2);
+  const sw = (t * .35) % 1;
+  u1.sweep.scale.setScalar(.5 + sw * 1.6); u1.sweep.material.opacity = .8 * (1 - sw);
+  u1.figures.forEach((f, i) => { f.rotation.y = Math.sin(t * .4 + i) * .5; });
+
+  // 2 · report → fields
+  const n2 = near(2, smooth);
+  g2.userData.sentence.rotation.y = smx * .18;
+  g2.userData.fields.forEach((row, i) => {
+    const on = Math.max(0, Math.min(1, n2 * 1.8 - i * .2));
+    row.position.x = (1 - on) * 2.2 * (g2.userData.side || 1) * -1;
+    row.children.forEach(c => fade(c.material, on, dt));
+    row.rotation.y = smx * .18;
+  });
+
+  // 3 · plan
+  const u3 = g3.userData, n3 = near(3, smooth);
+  const pt = u3.path.getPoint((t * .1) % 1);
+  u3.drone.position.copy(pt);
+  u3.drone.rotation.y = -t * .6;
+  u3.drone.userData.props.forEach(p => p.rotation.y += .6 * p.userData.dir);
+  u3.cage.material.opacity = .14 + n3 * .26;
+  u3.waypoints.forEach((w, i) => { w.rotation.set(t * .8 + i, t * .5, 0); w.scale.setScalar(1 + Math.sin(t * 2 + i) * .12); });
+  fade(u3.limit.material, n3, dt);
+
+  // 4 · see
+  const u4 = g4.userData, n4 = near(4, smooth);
+  u4.crowd.forEach((f, i) => { f.position.y = -1.5 + Math.sin(t * .8 + i) * .02; f.rotation.y = Math.sin(t * .3 + i) * .7; });
+  u4.beam.position.z = Math.sin(t * .55) * 2.4;
+  const locked = Math.max(0, Math.min(1, (Math.sin(t * .55 - 1.1) + 1) / 2 * n4 * 1.4));
+  u4.box.position.copy(u4.target.position).add(new THREE.Vector3(0, .5, 0));
+  u4.box.scale.setScalar(.9 + locked * .2);
+  fade(u4.box.material, locked, dt);
+  u4.conf.position.copy(u4.box.position).add(new THREE.Vector3(0, .85, 0));
+  u4.conf.rotation.y = smx * .2;
+  fade(u4.conf.material, locked, dt);
+
+  // 5 · confirm
+  const u5 = g5.userData, n5 = near(5, smooth);
+  u5.cards.forEach((c, i) => {
+    const mid = i === 1;
+    c.position.y += (((mid ? .45 : -.05) * n5 + .1) - c.position.y) * k60(.07, dt);
+    c.rotation.y = smx * .25 + (i - 1) * .12;
+    c.scale.setScalar(1 + (mid ? n5 * .1 : -n5 * .05));
+  });
+  u5.ring.rotation.z = t * .5; u5.ring.scale.setScalar(.8 + n5 * .35);
+  fade(u5.ring.material, n5 * .8, dt);
+  fade(u5.stamp.material, Math.max(0, n5 * 1.6 - .5), dt);
+
+  // 6 · traffic
+  const n6 = near(8, smooth);
+  g6.userData.cars.forEach((c, i) => {
+    c.userData.x += c.userData.speed * dt * .0016;
+    if (c.userData.x > 4.6) c.userData.x = -4.6;
+    c.position.x = c.userData.x;
+    const pos = c.userData.trail.geometry.attributes.position;
+    pos.setXYZ(0, c.userData.x - 1.4, -1.33, c.userData.lane * 1.3);
+    pos.setXYZ(1, c.userData.x, -1.33, c.userData.lane * 1.3);
+    pos.needsUpdate = true;
+    fade(c.userData.trail.material, .2 + n6 * .55, dt);
+    c.children[2].rotation.y = smx * .25;
+  });
+
+  // 7 · duplicates merge
+  const u7 = g7.userData, n7 = near(6, smooth);
+  const pull = n7 * (.5 + .5 * Math.sin(t * .8));
+  u7.cards.forEach(c => {
+    const h = c.userData.home;
+    if (c.userData.isDup) {
+      c.position.lerpVectors(h, new THREE.Vector3(0, 0, .2), pull * .92);
+      fade(c.material, 1 - pull * .75, dt);
+    } else {
+      c.position.set(h.x * (1 + n7 * .3), h.y * (1 + n7 * .3), h.z);
+    }
+    c.rotation.y = smx * .2;
+  });
+  fade(u7.merged.material, Math.max(0, pull * 1.3 - .3), dt);
+  fade(u7.counter.material, n7 * .9, dt);
+  u7.merged.rotation.y = smx * .2;
+
+  // 8 · SAM extraction
+  const u8 = g8.userData, n8 = near(7, smooth);
+  u8.mail.rotation.y = .3 + smx * .16;
+  u8.chips.forEach(c => {
+    const on = Math.max(0, Math.min(1, n8 * 1.9 - c.userData.i * .17));
+    fade(c.material, on, dt);
+    c.position.x = 2.2 - (1 - on) * 3.2;
+  });
+  fade(u8.gate.material, Math.max(0, n8 * 1.5 - .55), dt);
+
+  // 9 · the four small machines
+  const u9 = g9.userData, n9 = near(9, smooth);
+  const rise = (t * .3) % (u9.floors.length + 2);
+  u9.floors.forEach(f => {
+    const k = Math.max(.001, Math.min(1, rise - f.userData.i));
+    f.scale.set(k, k, k); fade(f.material, k * (.3 + n9 * .7), dt);
+  });
+  const ang = t * .55;
+  u9.miniDrone.position.set(Math.cos(ang) * 1.1, .55 + Math.sin(t * 1.4) * .04, Math.sin(ang) * 1.1);
+  u9.miniDrone.rotation.y = -ang + Math.PI / 2;
+  u9.miniDrone.userData.props.forEach(p => p.rotation.y += .5 * p.userData.dir);
+  u9.core.rotation.set(t * .3, t * .22, 0);
+  u9.words.forEach((w, i) => {
+    const a = w.userData.a + t * .25;
+    w.position.set(Math.cos(a) * .95, Math.sin(a) * .62, .1);
+    w.rotation.y = smx * .2;
+  });
+  const p9 = u9.faceGeo.attributes.position, mood = (Math.sin(t * .5) + 1) / 2;
+  for (let i = 0; i < p9.count; i++) {
+    const x = u9.faceBase[i * 3], y = u9.faceBase[i * 3 + 1], z = u9.faceBase[i * 3 + 2];
+    const smile = Math.max(0, -y) * mood * .3;
+    p9.setXYZ(i, x * (1 + smile * .25), y + smile * Math.sign(x) * .1, z);
+  }
+  p9.needsUpdate = true;
+  u9.mood.rotation.y = t * .18 + smx * .3;
+  u9.items.forEach(({ m, b }) => {
+    m.position.x += dt * .0011 * (1 + n9);
+    if (m.position.x > 2.4) m.position.x = -2.4;
+    m.rotation.y += .01;
+    b.position.copy(m.position);
+    fade(b.material, Math.abs(m.position.x) < .5 ? .9 : 0, dt);
+  });
+  u9.scan.material.opacity = .5 + .3 * Math.sin(t * 5);
+
+  // 10 · closing
+  const u10 = g10.userData, n10 = near(10, smooth);
+  u10.drone.position.y = .2 + Math.sin(t * 1.3) * .07;
+  u10.drone.rotation.y = .3 + Math.sin(t * .4) * .5 + smx * .3;
+  u10.drone.userData.props.forEach(p => p.rotation.y += .5 * p.userData.dir);
+  u10.halo.scale.setScalar(1 + n10 * .25 + Math.sin(t) * .02);
+  u10.dust.rotation.y = t * .03;
+
+  paintTopic(smooth);
+  const idx = Math.round(smooth);
+  const names = NAMES();
+  if (names[idx] && (idx !== lastName || rail.textContent !== names[idx])) { lastName = idx; rail.textContent = names[idx]; }
+
+  renderer.render(scene, camera);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
