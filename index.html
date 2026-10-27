@@ -82,6 +82,30 @@
   .flow span{border:1px solid var(--line);border-radius:5px;padding:9px 10px;background:color-mix(in srgb,var(--bg) 55%,transparent)}
   .flow span.human{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
   .flow i{font-style:normal;color:var(--muted)}
+  .cover h2{font-size:clamp(46px,7vw,92px);letter-spacing:-.04em}
+  .chapter .box{padding-inline-start:22px;position:relative}
+  .chapter .rail-line{position:absolute;inset-block:0;inset-inline-start:clamp(16px,6vw,112px);width:2px;
+    background:linear-gradient(180deg,transparent,var(--accent) 12%,var(--accent) 88%,transparent);opacity:.45}
+  .chapter-last .rail-line{background:linear-gradient(180deg,var(--accent),transparent 90%)}
+  .chapter .kicker{font-size:13px;letter-spacing:.2em}
+  .chapter h2{font-size:clamp(25px,3.2vw,38px)}
+  .chapter .lede{font-size:clamp(16px,1.6vw,19px)}
+  .more{border-top:1px solid var(--line);margin-top:2px}
+  .more summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;min-height:44px;
+    font:500 11.5px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+  .more summary::-webkit-details-marker{display:none}
+  .more summary::after{content:"+";font-size:15px;line-height:1;opacity:.8}
+  .more[open] summary::after{content:"–"}
+  .more p{margin:0 0 6px;font-size:15.5px;line-height:1.75}
+  .chapters{position:fixed;z-index:4;inset-block-start:50%;inset-inline-start:clamp(16px,3vw,34px);transform:translateY(-50%);
+    display:grid;gap:14px;opacity:0;transition:opacity .4s;pointer-events:none}
+  .chapters.on{opacity:1}
+  .chapters b{font:500 11px/1 var(--f-mono);letter-spacing:.14em;color:var(--muted);display:flex;align-items:center;gap:8px}
+  .chapters b::before{content:"";width:16px;height:1.5px;background:currentColor;transition:width .3s,background .3s}
+  .chapters b.now{color:var(--accent)}
+  .chapters b.now::before{width:30px}
+  .chapters em{font-style:normal;font:500 10px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+  @media (max-width:860px){ .chapters{display:none} .chapter .box{padding-inline-start:16px} }
   .links{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
   .links a{text-decoration:none;color:var(--text);font:500 13px/1 var(--f-mono);border:1px solid var(--line);border-radius:999px;
     min-height:44px;display:inline-flex;align-items:center;padding:0 18px;direction:ltr;transition:border-color .2s ease,transform .2s ease}
@@ -126,6 +150,10 @@
 <div class="progress"><i id="bar"></i></div>
 <div class="scrollcue" id="cue">SCROLL</div>
 
+<nav class="chapters" id="chapters" aria-hidden="true">
+  <em>Janah</em>
+  <b data-ch="1">01</b><b data-ch="2">02</b><b data-ch="3">03</b><b data-ch="4">04</b>
+</nav>
 <main id="story"></main>
 
 <script>
@@ -133,91 +161,107 @@
 const STORY = [
   { side:'a',
     en:{ kicker:'AI Engineer · Makkah, Saudi Arabia', h1:'Ghala Mansour',
-         lede:'I build AI that reads Arabic, sees the physical world, and runs inside real operations — with a person holding the final decision.' },
+         lede:'I build AI that reads Arabic, sees the world around it, and works where the stakes are real — with a person holding the final call.' },
     ar:{ kicker:'مهندسة ذكاء اصطناعي · مكة المكرمة', h1:'غلا منصور',
-         lede:'أبني ذكاءً اصطناعياً يقرأ العربية، ويرى العالم من حوله، ويعمل داخل عمليات حقيقية، ويبقى القرار الأخير بيد إنسان.' } },
+         lede:'أبني ذكاءً اصطناعياً يقرأ العربية، ويرى ما حوله، ويعمل حيث تكون العواقب حقيقية، ويبقى القرار الأخير بيد إنسان.' } },
 
-  { side:'b',
-    en:{ kicker:'Graduation project · 2025–2026 · team of four', h2:'Janah',
-         lede:'An Arabic human–drone framework for finding missing children — built and field-tested as our graduation prototype.',
-         p:'A parent files a report in the app. A language model turns the Arabic report and the rescuer\'s spoken instructions into a bounded flight plan, the drone searches with computer vision, and no match is accepted without a human.' },
-    ar:{ kicker:'مشروع التخرج · ٢٠٢٥–٢٠٢٦ · فريق من أربعة', h2:'جناح',
-         lede:'إطار عربي للتفاعل بين الإنسان والدرون في البحث عن الأطفال المفقودين، بنيناه واختبرناه ميدانياً كنموذج تخرّج.',
-         p:'الأهل يرفعون البلاغ من التطبيق، ونموذج لغوي يحوّل البلاغ وتعليمات رجل الإنقاذ الصوتية إلى خطة طيران محدودة الصلاحيات، والدرون يبحث بالرؤية الحاسوبية، ولا تُعتمد أي مطابقة دون إنسان.' } },
+  { side:'b', cover:'janah',
+    en:{ kicker:'Graduation project · built and field-tested', h2:'Janah',
+         lede:'A rescue drone you brief in Arabic, to find a missing child.',
+         p:'Four of us built it and flew it. Four steps, from the moment a parent reports to the moment a rescuer confirms.',
+         facts:[['160','tests passed'],['~0.5 s','per frame · ordinary CPU']] },
+    ar:{ kicker:'مشروع التخرج · بنيناه واختبرناه ميدانياً', h2:'جناح',
+         lede:'درون إنقاذ تكلّمه بالعربية ليبحث عن طفل مفقود.',
+         p:'بنيناه وطيّرناه نحن الأربعة. أربع خطوات، من لحظة بلاغ الأهل إلى لحظة تأكيد رجل الإنقاذ.',
+         facts:[['١٦٠','اختبار ناجح'],['~٠٫٥ ث','لكل إطار · معالج عادي']] } },
 
-  { side:'a',
-    en:{ kicker:'01 · Report', h2:'A report in Arabic, in under a minute',
-         p:'Text or voice, one reference photo of the child, and the location. That is everything the system needs to start — no forms to learn, no piloting skills required.',
-         facts:[['< 1 min','to file a report'],['1 photo','is enough to match']] },
-    ar:{ kicker:'٠١ · البلاغ', h2:'بلاغ بالعربية في أقل من دقيقة',
-         p:'نص أو صوت، وصورة مرجعية واحدة للطفل، والموقع. هذا كل ما يحتاجه النظام ليبدأ، بلا نماذج معقدة ولا خبرة في قيادة الطائرات.',
-         facts:[['< دقيقة','لرفع البلاغ'],['صورة واحدة','تكفي للمطابقة']] } },
+  { side:'b', chapter:1,
+    en:{ kicker:'01', h2:'Say what happened, in Arabic',
+         lede:'A voice note and one photo. That is the whole report.',
+         more:'The app takes the report as text or voice along with a single reference photo of the child and the location, and sends it straight to the rescue team — under a minute, no forms to learn.' },
+    ar:{ kicker:'٠١', h2:'قل ما حدث، بالعربية',
+         lede:'رسالة صوتية وصورة واحدة. هذا كل البلاغ.',
+         more:'يستقبل التطبيق البلاغ نصاً أو صوتاً مع صورة مرجعية واحدة للطفل والموقع، ويرسله مباشرة لفريق الإنقاذ، في أقل من دقيقة وبلا نماذج معقدة.' } },
 
-  { side:'b',
-    en:{ kicker:'02 · Plan', h2:'From an Arabic sentence to a flight mission',
-         p:'The model turns commands like "ابحث حول الساحة" into a mission with bounded autonomy. A safety layer rejects anything outside the envelope — altitude, distance, battery — and lands the drone when a limit is reached.',
-         flow:['Arabic command','LLM plan','Safety layer','Execute'] },
-    ar:{ kicker:'٠٢ · الخطة', h2:'من جملة عربية إلى مهمة طيران',
-         p:'النموذج يحوّل أوامر مثل «ابحث حول الساحة» إلى مهمة محدودة الصلاحيات، وطبقة أمان ترفض أي أمر خارج الحدود الآمنة من ارتفاع ومسافة وبطارية، وتنفّذ هبوطاً عند بلوغ أي حد.',
-         flow:['أمر عربي','خطة النموذج','طبقة الأمان','تنفيذ'] } },
+  { side:'b', chapter:2,
+    en:{ kicker:'02', h2:'The words become a flight plan',
+         lede:'"ابحث حول الساحة" turns into a mission the drone is allowed to fly.',
+         more:'A language model converts Arabic commands into a mission with bounded autonomy. A safety layer refuses anything outside the envelope — altitude, distance, battery — and brings the drone down when a limit is reached.',
+         flow:['Arabic command','Plan','Safety layer','Fly'] },
+    ar:{ kicker:'٠٢', h2:'الكلام يصير خطة طيران',
+         lede:'«ابحث حول الساحة» تتحول إلى مهمة مسموح للدرون أن يطيرها.',
+         more:'يحوّل النموذج اللغوي الأوامر العربية إلى مهمة محدودة الصلاحيات، وطبقة أمان ترفض كل ما يخرج عن الحدود من ارتفاع ومسافة وبطارية، وتُنزل الدرون عند بلوغ أي حد.',
+         flow:['أمر عربي','خطة','طبقة أمان','طيران'] } },
 
-  { side:'a',
-    en:{ kicker:'03 · See', h2:'Finding one child among many',
-         p:'Person detection runs on the drone feed, then each candidate is compared against the single reference photo and the clothing colour described in the report. It runs on an ordinary CPU with a DJI Tello — no GPU rig in the field.',
-         facts:[['~0.5 s','per frame · CPU'],['< 2 s','backend response'],['160','tests passed']],
-         chips:['DJI Tello','Flask API','Firebase','Real-time CV'] },
-    ar:{ kicker:'٠٣ · الرؤية', h2:'العثور على طفل واحد بين كثيرين',
-         p:'كشف الأشخاص يعمل على بث الدرون، ثم يُقارن كل مرشح بالصورة المرجعية الواحدة وبلون الملابس المذكور في البلاغ. ويعمل على معالج عادي مع درون DJI Tello، بلا عتاد رسومي في الميدان.',
-         facts:[['~٠٫٥ ث','لكل إطار · CPU'],['< ٢ ث','استجابة الخادم'],['١٦٠','اختبار ناجح']],
-         chips:['DJI Tello','Flask API','Firebase','Real-time CV'] } },
+  { side:'b', chapter:3,
+    en:{ kicker:'03', h2:'One child among many',
+         lede:'The camera sees a crowd. It is looking for one face, from one photo.',
+         more:'Person detection runs on the drone feed, then each candidate is compared against the single reference photo and the clothing colour from the report. It runs on an ordinary CPU with a DJI Tello — no GPU rig in the field.',
+         chips:['DJI Tello','Flask API','Firebase'] },
+    ar:{ kicker:'٠٣', h2:'طفل واحد بين كثيرين',
+         lede:'الكاميرا ترى حشداً، وهي تبحث عن وجه واحد من صورة واحدة.',
+         more:'يعمل كشف الأشخاص على بث الدرون، ثم يُقارن كل مرشح بالصورة المرجعية الواحدة وبلون الملابس المذكور في البلاغ، على معالج عادي مع درون DJI Tello، بلا عتاد رسومي في الميدان.',
+         chips:['DJI Tello','Flask API','Firebase'] } },
 
-  { side:'b',
-    en:{ kicker:'04 · Confirm', h2:'The model proposes. A person decides.',
-         p:'Candidates are ranked and shown to the rescue team; the report closes only when a human confirms the match. That boundary is the design, not a limitation — it is what makes the system safe to put near a missing child.',
-         flow:['Candidates','Rescue team confirms','Report closed'], human:1 },
-    ar:{ kicker:'٠٤ · التأكيد', h2:'النموذج يرشّح، والإنسان يقرر',
-         p:'تُرتَّب الاحتمالات وتُعرض على فريق الإنقاذ، ولا يُغلق البلاغ إلا بتأكيد إنسان للمطابقة. هذا الحد تصميمٌ مقصود لا قصور، وهو ما يجعل النظام آمناً قرب طفل مفقود.',
-         flow:['مرشحون','تأكيد فريق الإنقاذ','إغلاق البلاغ'], human:1 } },
-
-  { side:'a',
-    en:{ kicker:'Kidana Development Company · Hajj 2026 · seasonal', h2:'Catching the same report twice',
-         p:'During Hajj, thousands of maintenance reports arrive in Arabic, written differently by different people, many describing the same problem. The service I built for the season polled Maximo over OSLC every 15 seconds, normalised the Arabic, grouped reports by location code, then scored each pair on wording, numbers and time gap. A pair was flagged only above 90% wording match with agreeing numbers; the same sentence template with different numbers was deliberately let through.',
-         chips:['Arabic NLP','Multi-signal scoring','IBM Maximo · OSLC','SQLite'] },
-    ar:{ kicker:'شركة كدانة للتطوير · موسم الحج ٢٠٢٦ · عمل موسمي', h2:'أن تُكتشف نفس المشكلة مرتين',
-         p:'في الموسم تصل آلاف بلاغات الصيانة بالعربية بصياغات مختلفة، وكثير منها يصف المشكلة نفسها. الخدمة التي بنيتها للموسم كانت تستطلع Maximo عبر OSLC كل ١٥ ثانية، وتطبّع النص العربي، وتجمّع البلاغات حسب رمز الموقع، ثم تقيس كل زوج على الصياغة والأرقام والفارق الزمني. ولم يكن الزوج يُرفع كمكرر إلا فوق ٩٠٪ تطابقاً في الصياغة مع اتفاق الأرقام، أما القالب نفسه بأرقام مختلفة فكان يُمرَّر عمداً.',
-         chips:['معالجة لغة عربية','تقييم متعدد الإشارات','IBM Maximo · OSLC','SQLite'] } },
-
-  { side:'b',
-    en:{ kicker:'2026 · built and led · internal project, company unnamed', h2:'Opportunities that stop getting lost',
-         p:'Requests for quotation and tenders piled up in one shared mailbox and were sorted by hand. The agent reads each email, extracts the account, business line, tender number and deadline, and recommends an action. It is designed to write to the CRM only after a person reviews it within an agreed response window. Extraction is prototyped and tested on real mailbox examples; the review step and the window are still being agreed with the business.',
-         flow:['Mailbox','Extraction','Human review · agreed window','CRM record'], human:2 },
-    ar:{ kicker:'٢٠٢٦ · بنيته وقدته · مشروع داخلي، اسم الشركة محجوب', h2:'فرص تجارية لا تضيع',
-         p:'طلبات العروض والمناقصات كانت تتكدس في بريد واحد وتُفرز يدوياً. الوكيل يقرأ كل رسالة ويستخرج العميل وخط الأعمال ورقم المناقصة والموعد النهائي ويقترح الإجراء. وهو مصمَّم ليكتب في نظام العملاء بعد مراجعة إنسان ضمن مهلة استجابة متفق عليها. مرحلة الاستخراج مجرَّبة على أمثلة حقيقية من البريد، أما خطوة المراجعة والمهلة فما زالتا قيد الاتفاق مع الجهة المعنية.',
-         flow:['البريد','الاستخراج','مراجعة بشرية · مهلة متفق عليها','سجل العملاء'], human:2 } },
+  { side:'b', chapter:4, last:true,
+    en:{ kicker:'04', h2:'A person says yes',
+         lede:'The model ranks candidates. It never closes a report.',
+         more:'Only the rescue team can confirm a match and close the case. That boundary is the design, not a limitation — it is what makes a system like this safe to point at a missing child.',
+         flow:['Candidates','Rescuer confirms','Case closed'], human:1 },
+    ar:{ kicker:'٠٤', h2:'إنسان يقول نعم',
+         lede:'النموذج يرتّب الاحتمالات، ولا يغلق بلاغاً أبداً.',
+         more:'لا يملك إغلاق الحالة وتأكيد المطابقة إلا فريق الإنقاذ. وهذا الحدّ تصميمٌ مقصود لا قصور، وهو ما يجعل نظاماً كهذا آمناً حين يُوجَّه نحو طفل مفقود.',
+         flow:['مرشحون','تأكيد رجل الإنقاذ','إغلاق الحالة'], human:1 } },
 
   { side:'a',
-    en:{ kicker:'Computer vision · 2024–2025', h2:'Teaching cameras to watch traffic, sites and shelves',
-         p:'Vehicle detection and tracking that keeps an ID across frames, turning road footage into counts and flow. A prototype signal controller that spots an approaching ambulance and clears its path. Bunyan, an Aqarathon finalist, comparing drone capture against a BIM model to track construction progress. And a self-checkout prototype that recognises products without barcodes.',
-         chips:['Object detection','Multi-object tracking','PyTorch','BIM'] },
-    ar:{ kicker:'رؤية حاسوبية · ٢٠٢٤–٢٠٢٥', h2:'تعليم الكاميرات مراقبة الطرق والمواقع والرفوف',
-         p:'كشف المركبات وتتبّعها مع حفظ رقم كل مركبة عبر الإطارات لتحويل تسجيلات الطرق إلى أعداد وتدفق. ونموذج أولي لمتحكّم إشارات يرصد سيارة إسعاف قادمة ويفتح لها المسار. وبنيان، المتأهل لنهائيات عقاراثون، يقارن تصوير الدرون بنموذج BIM لمتابعة تقدّم البناء. ونموذج أولي لدفع ذاتي يتعرّف على المنتجات بلا باركود.',
-         chips:['كشف الأجسام','تتبع متعدد','PyTorch','BIM'] } },
+    en:{ kicker:'Kidana Development Company · Hajj 2026 · seasonal', h2:'Fifty reports, one fault',
+         lede:'Kidana develops the holy sites — Mina, Arafat and Muzdalifah. In season, the same fault is reported over and over, each time in different words.',
+         more:'The service I built for the season watched new maintenance requests in IBM Maximo, normalised their Arabic, and compared each new one against reports from the same location. A pair was raised as duplicate only when the wording matched closely and the numbers agreed — so crews stopped being sent twice to the same problem, while genuinely different reports still got through.',
+         chips:['Arabic NLP','IBM Maximo','Text similarity'] },
+    ar:{ kicker:'شركة كدانة للتطوير · موسم الحج ٢٠٢٦ · عمل موسمي', h2:'خمسون بلاغاً، عطل واحد',
+         lede:'كدانة هي مطوّر المشاعر المقدسة: منى وعرفات ومزدلفة. وفي الموسم يُبلَّغ عن العطل الواحد مرات ومرات، في كل مرة بصياغة مختلفة.',
+         more:'الخدمة التي بنيتها للموسم كانت تراقب طلبات الصيانة الجديدة في IBM Maximo، وتطبّع نصها العربي، وتقارن كل بلاغ جديد ببلاغات الموقع نفسه. ولم يكن الزوج يُرفع كمكرر إلا حين تتطابق الصياغة بدرجة عالية وتتفق الأرقام، فتوقف إرسال الفرق مرتين للمشكلة نفسها، وبقيت البلاغات المختلفة فعلاً تمر.',
+         chips:['معالجة لغة عربية','IBM Maximo','تشابه نصي'] } },
 
   { side:'b',
-    en:{ kicker:'Language & learning · 2023–2025', h2:'Arabic models for people, not benchmarks',
-         p:"Afqah, an ALLaM Challenge finalist, was built to adapt explanations for autistic learners on SDAIA's Arabic model. Tahbeer, a team project, supports Qur'an recitation and memorisation. EduMood estimates classroom engagement from facial expression using DeepFace on FER-2013. And a job recommender that matches people to roles from their own words. All four are course and challenge projects, not products.",
-         chips:['ALLaM','DeepFace · FER-2013','Streamlit','Recommenders'] },
-    ar:{ kicker:'اللغة والتعلّم · ٢٠٢٣–٢٠٢٥', h2:'نماذج عربية لأجل الناس لا لأجل المقاييس',
-         p:'أفقه، المتأهل لنهائيات تحدي علّام، بُني ليكيّف الشرح للمتعلمين على طيف التوحد على نموذج علّام من سدايا. وتحبير، مشروع جماعي، يدعم التلاوة والحفظ. وEduMood يقدّر تفاعل الصف من تعابير الوجه بـDeepFace المدرَّب على FER-2013. ونظام توصية وظائف يطابق الناس بالأدوار من كلماتهم هم. وجميعها مشاريع مقررات وتحديات، لا منتجات.',
-         chips:['علّام','DeepFace · FER-2013','Streamlit','أنظمة توصية'] } },
+    en:{ kicker:'2026 · built and led · internal project, company unnamed', h2:'The inbox that swallowed deals',
+         lede:'Tenders and quote requests landed in one shared mailbox and were sorted by hand. Some were answered late. Some were never seen.',
+         more:'The agent reads each email and pulls out the account, business line, tender number and deadline, then recommends what to do with it. By design it writes to the CRM only after a person reviews it within an agreed response window. Extraction is prototyped and tested on real mailbox examples; the review step and the window are still being agreed with the business.',
+         flow:['Mailbox','Extraction','Human review','CRM'], human:2 },
+    ar:{ kicker:'٢٠٢٦ · بنيته وقدته · مشروع داخلي، اسم الشركة محجوب', h2:'بريدٌ تبتلعه الفرص',
+         lede:'المناقصات وطلبات العروض تصل إلى بريد واحد وتُفرز يدوياً. بعضها يُرد عليه متأخراً، وبعضها لا يُرى أصلاً.',
+         more:'يقرأ الوكيل كل رسالة ويستخرج منها العميل وخط الأعمال ورقم المناقصة والموعد النهائي، ثم يقترح الإجراء. وهو مصمَّم ليكتب في نظام العملاء بعد مراجعة إنسان ضمن مهلة متفق عليها. مرحلة الاستخراج مجرَّبة على أمثلة حقيقية، أما المراجعة والمهلة فما زالتا قيد الاتفاق.',
+         flow:['البريد','الاستخراج','مراجعة بشرية','نظام العملاء'], human:2 } },
+
+  { side:'a',
+    en:{ kicker:'Computer vision · 2024–2025', h2:'Cameras that keep watch',
+         lede:'Counting traffic. Clearing a path for an ambulance. Checking a building against its own blueprint. Ringing up a basket with no barcodes.',
+         more:'Vehicle detection and tracking that keeps an ID across frames, turning road footage into counts and flow. A prototype signal controller that spots an approaching ambulance and gives it green. Bunyan, an Aqarathon finalist, comparing drone capture against a BIM model to track construction progress. And a self-checkout prototype that recognises products by sight.',
+         chips:['Object detection','Tracking','PyTorch','BIM'] },
+    ar:{ kicker:'رؤية حاسوبية · ٢٠٢٤–٢٠٢٥', h2:'كاميرات تراقب نيابةً عنّا',
+         lede:'عدّ المركبات. فتح مسار لسيارة إسعاف. مقارنة مبنى بمخططه. حساب سلة مشتريات بلا باركود.',
+         more:'كشف المركبات وتتبّعها مع حفظ رقم كل مركبة عبر الإطارات، فتتحول تسجيلات الطرق إلى أعداد وتدفق. ونموذج أولي لمتحكّم إشارات يرصد سيارة إسعاف قادمة فيفتح لها الإشارة. وبنيان، المتأهل لنهائيات عقاراثون، يقارن تصوير الدرون بنموذج BIM لمتابعة تقدّم البناء. ونموذج أولي لدفع ذاتي يتعرّف على المنتجات بالنظر.',
+         chips:['كشف الأجسام','تتبع','PyTorch','BIM'] } },
+
+  { side:'b',
+    en:{ kicker:'Language & learning · 2023–2025', h2:'Arabic models, for people',
+         lede:'A tutor that adapts to an autistic learner. A reciting companion. A classroom that tells you when it stopped listening.',
+         more:'Afqah, an ALLaM Challenge finalist, was built to adapt explanations for autistic learners on SDAIA\'s Arabic model. Tahbeer, a team project, supports Qur\'an recitation and memorisation. EduMood estimates classroom engagement from facial expression using DeepFace. And a job recommender that matches people to roles from their own words. All four are course and challenge projects, not products.',
+         chips:['ALLaM','DeepFace','Streamlit'] },
+    ar:{ kicker:'اللغة والتعلّم · ٢٠٢٣–٢٠٢٥', h2:'نماذج عربية، لأجل الناس',
+         lede:'معلّم يتكيّف مع متعلّم على طيف التوحد. ورفيق للتلاوة. وفصلٌ يخبرك متى توقّف عن الإصغاء.',
+         more:'أفقه، المتأهل لنهائيات تحدي علّام، بُني ليكيّف الشرح للمتعلمين على طيف التوحد على نموذج علّام من سدايا. وتحبير، مشروع جماعي، يدعم التلاوة والحفظ. وEduMood يقدّر تفاعل الصف من تعابير الوجه باستخدام DeepFace. ونظام توصية وظائف يطابق الناس بالأدوار من كلماتهم هم. وجميعها مشاريع مقررات وتحديات، لا منتجات.',
+         chips:['علّام','DeepFace','Streamlit'] } },
 
   { side:'a',
     en:{ kicker:'Now', h2:'Where I am today',
-         p:'AI Continuous Improvement Engineer in a Quality, Warranty & CI department. I lead the intake project above, review improvement proposals and their charters before approval, and build the data work behind them in SAP and Power BI.',
+         lede:'AI Continuous Improvement Engineer, inside a quality and improvement department.',
+         more:'I lead the intake project above, review improvement proposals and their charters before approval, and build the data work behind them in SAP and Power BI.',
          facts:[['3.9/4','GPA · first-class honours'],['2026','BSc AI · Umm Al-Qura']],
          links:[['ghala.m.mansour@gmail.com','mailto:ghala.m.mansour@gmail.com'],['LinkedIn','https://linkedin.com/in/ghala-mansour-975526275'],['GitHub','https://github.com/GhalaMansour']] },
     ar:{ kicker:'اليوم', h2:'أين أنا الآن',
-         p:'مهندسة ذكاء اصطناعي للتحسين المستمر في إدارة الجودة والضمان والتحسين المستمر. أقود مشروع الاستقبال الذكي أعلاه، وأراجع مقترحات التحسين ووثائقها قبل اعتمادها، وأبني ما تحتاجه من عمل على البيانات في SAP وPower BI.',
+         lede:'مهندسة ذكاء اصطناعي للتحسين المستمر، داخل إدارة للجودة والتحسين.',
+         more:'أقود مشروع الاستقبال الذكي أعلاه، وأراجع مقترحات التحسين ووثائقها قبل اعتمادها، وأبني ما تحتاجه من عمل على البيانات في SAP وPower BI.',
          facts:[['٣٫٩/٤','المعدل · مرتبة الشرف الأولى'],['٢٠٢٦','بكالوريوس ذكاء اصطناعي · أم القرى']],
          links:[['ghala.m.mansour@gmail.com','mailto:ghala.m.mansour@gmail.com'],['LinkedIn','https://linkedin.com/in/ghala-mansour-975526275'],['GitHub','https://github.com/GhalaMansour']] } }
 ];
@@ -228,6 +272,7 @@ let LANG = (localStorage.getItem('ghala-lang') || 'en');
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
 function renderStory() {
   const story = document.getElementById('story');
+  const ar = LANG === 'ar';
   story.innerHTML = STORY.map((b, i) => {
     const c = b[LANG];
     const parts = [`<p class="kicker">${esc(c.kicker)}</p>`];
@@ -237,9 +282,11 @@ function renderStory() {
     if (c.p) parts.push(`<p>${esc(c.p)}</p>`);
     if (c.facts) parts.push(`<ul class="facts">${c.facts.map(([v, l]) => `<li><b>${esc(v)}</b><span>${esc(l)}</span></li>`).join('')}</ul>`);
     if (c.flow) parts.push(`<div class="flow">${c.flow.map((f, k) => `<span class="${c.human === k ? 'human' : ''}">${esc(f)}</span>`).join('<i>→</i>')}</div>`);
+    if (c.more) parts.push(`<details class="more"><summary>${ar ? 'كيف يعمل' : 'How it works'}</summary><p>${esc(c.more)}</p></details>`);
     if (c.chips) parts.push(`<ul class="chips">${c.chips.map(t => `<li>${esc(t)}</li>`).join('')}</ul>`);
     if (c.links) parts.push(`<div class="links">${c.links.map(([t, h]) => `<a href="${h}"${h.startsWith('http') ? ' target="_blank" rel="noopener"' : ''}>${esc(t)}</a>`).join('')}</div>`);
-    return `<section class="beat ${b.side}" data-beat="${i}"><div class="box">${parts.join('')}</div></section>`;
+    const cls = ['beat', b.side, b.cover ? 'cover' : '', b.chapter ? 'chapter' : '', b.last ? 'chapter-last' : ''].filter(Boolean).join(' ');
+    return `<section class="${cls}" data-beat="${i}">${b.chapter ? '<span class="rail-line" aria-hidden="true"></span>' : ''}<div class="box">${parts.join('')}</div></section>`;
   }).join('');
 }
 function applyLang(lang) {
@@ -620,6 +667,15 @@ const dirSign = () => (document.documentElement.dir === 'rtl' ? -1 : 1);
 function assignSides() {
   beats.forEach((b, i) => { if (GROUPS[i]) GROUPS[i].userData.side = (b.classList.contains('a') ? 1 : -1) * dirSign(); });
 }
+const chaptersEl = document.getElementById('chapters');
+function markChapters(sm) {
+  // the rail only exists while the reader is inside Janah (cover + four chapters)
+  const inside = sm > .6 && sm < 5.55;
+  chaptersEl.classList.toggle('on', inside);
+  if (!inside) return;
+  const cur = Math.min(4, Math.max(1, Math.round(sm) - 1));
+  chaptersEl.querySelectorAll('b').forEach(b => b.classList.toggle('now', +b.dataset.ch === cur));
+}
 function layoutGroups() {
   const narrow = innerWidth < 900;
   const halfAt = d => Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * d * camera.aspect;
@@ -933,6 +989,7 @@ function frame(now) {
   u10.dust.rotation.y = t * .03;
 
   paintTopic(smooth);
+  markChapters(smooth);
   const idx = Math.round(smooth);
   const names = NAMES();
   if (names[idx] && (idx !== lastName || rail.textContent !== names[idx])) { lastName = idx; rail.textContent = names[idx]; }
