@@ -139,10 +139,10 @@ const STORY = [
 
   { side:'b',
     en:{ kicker:'Graduation project · 2025–2026 · team of four', h2:'Janah',
-         lede:'An Arabic human–drone framework for finding missing children.',
+         lede:'An Arabic human–drone framework for finding missing children — built and field-tested as our graduation prototype.',
          p:'A parent files a report in the app. A language model turns the Arabic report and the rescuer\'s spoken instructions into a bounded flight plan, the drone searches with computer vision, and no match is accepted without a human.' },
     ar:{ kicker:'مشروع التخرج · ٢٠٢٥–٢٠٢٦ · فريق من أربعة', h2:'جناح',
-         lede:'إطار عربي للتفاعل بين الإنسان والدرون في البحث عن الأطفال المفقودين.',
+         lede:'إطار عربي للتفاعل بين الإنسان والدرون في البحث عن الأطفال المفقودين، بنيناه واختبرناه ميدانياً كنموذج تخرّج.',
          p:'الأهل يرفعون البلاغ من التطبيق، ونموذج لغوي يحوّل البلاغ وتعليمات رجل الإنقاذ الصوتية إلى خطة طيران محدودة الصلاحيات، والدرون يبحث بالرؤية الحاسوبية، ولا تُعتمد أي مطابقة دون إنسان.' } },
 
   { side:'a',
@@ -180,11 +180,11 @@ const STORY = [
          flow:['مرشحون','تأكيد فريق الإنقاذ','إغلاق البلاغ'], human:1 } },
 
   { side:'a',
-    en:{ kicker:'Kidana Development Company · Hajj 2026', h2:'Catching the same report twice',
-         p:'During Hajj, thousands of maintenance reports arrive in Arabic, written differently by different people, many describing the same problem. My service polls Maximo over OSLC every 15 seconds, normalises the Arabic, groups reports by location code, then scores each pair on wording, numbers and time gap. A pair is flagged only above 90% wording match with agreeing numbers; the same sentence template with different numbers is deliberately let through.',
+    en:{ kicker:'Kidana Development Company · Hajj 2026 · seasonal', h2:'Catching the same report twice',
+         p:'During Hajj, thousands of maintenance reports arrive in Arabic, written differently by different people, many describing the same problem. The service I built for the season polled Maximo over OSLC every 15 seconds, normalised the Arabic, grouped reports by location code, then scored each pair on wording, numbers and time gap. A pair was flagged only above 90% wording match with agreeing numbers; the same sentence template with different numbers was deliberately let through.',
          chips:['Arabic NLP','Multi-signal scoring','IBM Maximo · OSLC','SQLite'] },
-    ar:{ kicker:'شركة كدانة للتطوير · موسم الحج ٢٠٢٦', h2:'أن تُكتشف نفس المشكلة مرتين',
-         p:'في الموسم تصل آلاف بلاغات الصيانة بالعربية بصياغات مختلفة، وكثير منها يصف المشكلة نفسها. الخدمة التي بنيتها تستطلع Maximo عبر OSLC كل ١٥ ثانية، وتطبّع النص العربي، وتجمّع البلاغات حسب رمز الموقع، ثم تقيس كل زوج على الصياغة والأرقام والفارق الزمني. ولا يُرفع الزوج كمكرر إلا فوق ٩٠٪ تطابقاً في الصياغة مع اتفاق الأرقام، أما القالب نفسه بأرقام مختلفة فيُمرَّر عمداً.',
+    ar:{ kicker:'شركة كدانة للتطوير · موسم الحج ٢٠٢٦ · عمل موسمي', h2:'أن تُكتشف نفس المشكلة مرتين',
+         p:'في الموسم تصل آلاف بلاغات الصيانة بالعربية بصياغات مختلفة، وكثير منها يصف المشكلة نفسها. الخدمة التي بنيتها للموسم كانت تستطلع Maximo عبر OSLC كل ١٥ ثانية، وتطبّع النص العربي، وتجمّع البلاغات حسب رمز الموقع، ثم تقيس كل زوج على الصياغة والأرقام والفارق الزمني. ولم يكن الزوج يُرفع كمكرر إلا فوق ٩٠٪ تطابقاً في الصياغة مع اتفاق الأرقام، أما القالب نفسه بأرقام مختلفة فكان يُمرَّر عمداً.',
          chips:['معالجة لغة عربية','تقييم متعدد الإشارات','IBM Maximo · OSLC','SQLite'] } },
 
   { side:'b',
@@ -197,18 +197,18 @@ const STORY = [
 
   { side:'a',
     en:{ kicker:'Computer vision · 2024–2025', h2:'Teaching cameras to watch traffic, sites and shelves',
-         p:'Vehicle detection and tracking that keeps an ID across frames and turns road footage into counts and flow. A signal controller that spots an approaching ambulance and clears its path. Bunyan, an Aqarathon finalist, comparing drone capture against a BIM model to track construction progress. And a self-checkout that recognises products without barcodes.',
+         p:'Vehicle detection and tracking that keeps an ID across frames, turning road footage into counts and flow. A prototype signal controller that spots an approaching ambulance and clears its path. Bunyan, an Aqarathon finalist, comparing drone capture against a BIM model to track construction progress. And a self-checkout prototype that recognises products without barcodes.',
          chips:['Object detection','Multi-object tracking','PyTorch','BIM'] },
     ar:{ kicker:'رؤية حاسوبية · ٢٠٢٤–٢٠٢٥', h2:'تعليم الكاميرات مراقبة الطرق والمواقع والرفوف',
-         p:'كشف المركبات وتتبّعها مع حفظ رقم كل مركبة عبر الإطارات لتحويل تسجيلات الطرق إلى أعداد وتدفق. ومتحكّم إشارات يرصد سيارة إسعاف قادمة ويفتح لها المسار. وبنيان، المتأهل لنهائيات عقاراثون، يقارن تصوير الدرون بنموذج BIM لمتابعة تقدّم البناء. ونظام دفع ذاتي يتعرّف على المنتجات بلا باركود.',
+         p:'كشف المركبات وتتبّعها مع حفظ رقم كل مركبة عبر الإطارات لتحويل تسجيلات الطرق إلى أعداد وتدفق. ونموذج أولي لمتحكّم إشارات يرصد سيارة إسعاف قادمة ويفتح لها المسار. وبنيان، المتأهل لنهائيات عقاراثون، يقارن تصوير الدرون بنموذج BIM لمتابعة تقدّم البناء. ونموذج أولي لدفع ذاتي يتعرّف على المنتجات بلا باركود.',
          chips:['كشف الأجسام','تتبع متعدد','PyTorch','BIM'] } },
 
   { side:'b',
     en:{ kicker:'Language & learning · 2023–2025', h2:'Arabic models for people, not benchmarks',
-         p:'Afqah, an ALLaM Challenge finalist, adapts explanations for autistic learners on SDAIA\'s Arabic model. Tahbeer helps people recite and memorise Qur\'an more accurately. EduMood reads classroom engagement from facial expression with DeepFace on FER-2013. And a job recommender that matches people to roles from their own words.',
+         p:"Afqah, an ALLaM Challenge finalist, was built to adapt explanations for autistic learners on SDAIA's Arabic model. Tahbeer, a team project, supports Qur'an recitation and memorisation. EduMood estimates classroom engagement from facial expression using DeepFace on FER-2013. And a job recommender that matches people to roles from their own words. All four are course and challenge projects, not products.",
          chips:['ALLaM','DeepFace · FER-2013','Streamlit','Recommenders'] },
     ar:{ kicker:'اللغة والتعلّم · ٢٠٢٣–٢٠٢٥', h2:'نماذج عربية لأجل الناس لا لأجل المقاييس',
-         p:'أفقه، المتأهل لنهائيات تحدي علّام، يكيّف الشرح للمتعلمين على طيف التوحد على نموذج علّام من سدايا. وتحبير يساعد على التلاوة والحفظ بدقة أعلى. وEduMood يقرأ تفاعل الصف من تعابير الوجه بـDeepFace المدرَّب على FER-2013. ونظام توصية وظائف يطابق الناس بالأدوار من كلماتهم هم.',
+         p:'أفقه، المتأهل لنهائيات تحدي علّام، بُني ليكيّف الشرح للمتعلمين على طيف التوحد على نموذج علّام من سدايا. وتحبير، مشروع جماعي، يدعم التلاوة والحفظ. وEduMood يقدّر تفاعل الصف من تعابير الوجه بـDeepFace المدرَّب على FER-2013. ونظام توصية وظائف يطابق الناس بالأدوار من كلماتهم هم. وجميعها مشاريع مقررات وتحديات، لا منتجات.',
          chips:['علّام','DeepFace · FER-2013','Streamlit','أنظمة توصية'] } },
 
   { side:'a',
@@ -637,10 +637,39 @@ window.rebindBeats = () => {
   assignSides(); layoutGroups(); onScroll();
 };
 
+/* ---------- scene materials remember their dark-theme colour ---------- */
+const SCENE_MATS = [];
+scene.traverse(o => {
+  const mats = o.material ? (Array.isArray(o.material) ? o.material : [o.material]) : [];
+  mats.forEach(m => {
+    if (!m || !m.color || m.userData.base) return;
+    m.userData.base = m.color.clone();
+    m.userData.kind = o.isPoints ? 'points' : (o.isLine || o.isLineSegments) ? 'line' : 'solid';
+    SCENE_MATS.push(m);
+  });
+});
+const ACCENT_SET = new Set(ACCENT_MATS), COOL_SET = new Set(COOL_MATS);
+function gradeScene(mode) {
+  // light theme: pull surfaces toward graphite and lines toward ink so they read on cream
+  SCENE_MATS.forEach(m => {
+    if (ACCENT_SET.has(m) || COOL_SET.has(m)) return;
+    const b = m.userData.base;
+    if (mode === 'light') {
+      const lum = .2126 * b.r + .7152 * b.g + .0722 * b.b;
+      const pull = m.userData.kind === 'line' ? .78 : (lum > .55 ? .62 : .34);
+      m.color.copy(b).lerp(new THREE.Color(0x0E1216), pull);
+      if (m.userData.kind === 'points') m.color.copy(b).lerp(new THREE.Color(0x0E1216), .55);
+      if (m.transparent && m.userData.baseOpacity === undefined) m.userData.baseOpacity = m.opacity;
+    } else {
+      m.color.copy(b);
+    }
+  });
+}
+
 /* ---------- themes ---------- */
 const THEMES = {
   dark:  { bg: 0x0D1317, fog: [0x0D1317, 44, 128], hemi: [0xD9E8EC, 0x0D1317, 1.0], key: [0xFFF6E8, 1.6], warm: [0xFFB477, .55], vig: '13,19,23' },
-  light: { bg: 0xF5F1E9, fog: [0xF5F1E9, 42, 132], hemi: [0xFFFFFF, 0xE4DCCE, 1.25], key: [0xFFFBF2, 1.65], warm: [0xE8B45C, .4], vig: '245,241,233' }
+  light: { bg: 0xF5F1E9, fog: [0xF5F1E9, 34, 108], hemi: [0xFFFFFF, 0xC9C0AE, 1.15], key: [0xFFFBF2, 1.75], warm: [0xE8B45C, .35], vig: '245,241,233' }
 };
 function applyTheme(mode) {
   const th = THEMES[mode];
@@ -650,6 +679,7 @@ function applyTheme(mode) {
   document.body.style.background = mode === 'dark'
     ? 'linear-gradient(180deg,#0D1317 0%,#141D22 55%,#0D1317 100%)'
     : 'linear-gradient(180deg,#F5F1E9 0%,#FBF8F2 55%,#F2EDE3 100%)';
+  gradeScene(mode);
   renderer.setClearColor(th.bg, 1);
   scene.fog.color.setHex(th.fog[0]); scene.fog.near = th.fog[1]; scene.fog.far = th.fog[2];
   hemi.color.setHex(th.hemi[0]); hemi.groundColor.setHex(th.hemi[1]); hemi.intensity = th.hemi[2];
