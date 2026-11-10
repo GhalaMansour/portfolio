@@ -52,6 +52,7 @@
   .hud .brand{font-family:var(--f-display);font-weight:600;font-size:15px;letter-spacing:-.01em}
   .hud .right{display:flex;align-items:center;gap:8px}
   .rail{font:500 10.5px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);direction:ltr;margin-inline-end:4px}
+  a.pill{text-decoration:none;display:inline-flex;align-items:center}
   .pill{font:500 12px/1 var(--f-mono);color:var(--text);background:color-mix(in srgb,var(--bg) 70%,transparent);
     border:1px solid var(--line);border-radius:999px;min-height:44px;padding:0 16px;cursor:pointer;
     backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:border-color .2s ease,color .2s ease}
@@ -83,34 +84,36 @@
   .flow span.human{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
   .flow i{font-style:normal;color:var(--muted)}
   .cover h2{font-size:clamp(46px,7vw,92px);letter-spacing:-.04em}
-  .chapter .box{padding-inline-start:22px;position:relative}
-  .chapter .rail-line{position:absolute;inset-block:0;inset-inline-start:clamp(16px,6vw,112px);width:2px;
-    background:linear-gradient(180deg,transparent,var(--accent) 12%,var(--accent) 88%,transparent);opacity:.45}
-  .chapter-last .rail-line{background:linear-gradient(180deg,var(--accent),transparent 90%)}
-  .chapter .kicker{font-size:13px;letter-spacing:.2em}
+  .chapter .kicker{font-size:12.5px;letter-spacing:.22em}
+  .chapter .kicker::after{content:" · JANAH";opacity:.45}
+  html[lang="ar"] .chapter .kicker::after{content:" · جناح"}
+  .detail{font-size:15.5px;line-height:1.75;color:color-mix(in srgb,var(--text) 72%,transparent)}
   .chapter h2{font-size:clamp(25px,3.2vw,38px)}
   .chapter .lede{font-size:clamp(16px,1.6vw,19px)}
-  .more{border-top:1px solid var(--line);margin-top:2px}
-  .more summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;min-height:44px;
-    font:500 11.5px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
-  .more summary::-webkit-details-marker{display:none}
-  .more summary::after{content:"+";font-size:15px;line-height:1;opacity:.8}
-  .more[open] summary::after{content:"–"}
-  .more p{margin:0 0 6px;font-size:15.5px;line-height:1.75}
-  .chapters{position:fixed;z-index:4;inset-block-start:50%;inset-inline-start:clamp(16px,3vw,34px);transform:translateY(-50%);
-    display:grid;gap:14px;opacity:0;transition:opacity .4s;pointer-events:none}
-  .chapters.on{opacity:1}
-  .chapters b{font:500 11px/1 var(--f-mono);letter-spacing:.14em;color:var(--muted);display:flex;align-items:center;gap:8px}
-  .chapters b::before{content:"";width:16px;height:1.5px;background:currentColor;transition:width .3s,background .3s}
-  .chapters b.now{color:var(--accent)}
-  .chapters b.now::before{width:30px}
-  .chapters em{font-style:normal;font:500 10px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
-  @media (max-width:860px){ .chapters{display:none} .chapter .box{padding-inline-start:16px} }
+    .reach{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px;padding:20px;border:1px solid var(--line);border-radius:14px;
+    background:color-mix(in srgb,var(--text) 4%,transparent);max-width:34rem}
+  .reach-title{grid-column:1/-1;font:600 12.5px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+  .reach label{display:grid;gap:6px}
+  .reach label.wide{grid-column:1/-1}
+  .reach span{font:500 11.5px/1 var(--f-mono);color:var(--muted)}
+  .reach input,.reach textarea{font:400 15px/1.5 var(--f-body);color:var(--text);background:transparent;
+    border:1px solid var(--line);border-radius:9px;padding:11px 12px;min-height:44px;resize:vertical}
+  .reach input:focus,.reach textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+  .reach-send{grid-column:1/-1;justify-self:start;min-height:46px;padding:0 20px;border-radius:999px;cursor:pointer;
+    background:var(--accent);border:1px solid var(--accent);color:#0B1013;font:600 14px/1 var(--f-body)}
+  .reach-note{grid-column:1/-1;margin:0;font:400 11.5px/1.6 var(--f-mono);color:var(--muted)}
+  @media (max-width:620px){ .reach{grid-template-columns:1fr} }
   .links{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
   .links a{text-decoration:none;color:var(--text);font:500 13px/1 var(--f-mono);border:1px solid var(--line);border-radius:999px;
     min-height:44px;display:inline-flex;align-items:center;padding:0 18px;direction:ltr;transition:border-color .2s ease,transform .2s ease}
   .links a:hover{transform:translateY(-1px)}
   .links a:first-child{background:var(--accent);border-color:var(--accent);color:#06130D}
+  .step{position:fixed;z-index:4;inset-block-start:50%;inset-inline-end:clamp(16px,3vw,34px);transform:translateY(-50%);
+    display:flex;align-items:baseline;gap:6px;font-family:var(--f-mono);opacity:0;transition:opacity .45s;pointer-events:none}
+  .step b{font-size:30px;font-weight:500;color:var(--accent);letter-spacing:-.02em}
+  .step span{font-size:12px;color:var(--muted);letter-spacing:.1em}
+  .step.on{opacity:1}
+  @media (max-width:860px){ .step{display:none} }
   .scrollcue{position:fixed;z-index:4;inset:auto 0 20px 0;text-align:center;font:500 10px/1 var(--f-mono);letter-spacing:.18em;color:var(--muted);transition:opacity .5s}
   @media (max-width:860px){
     .beat{min-height:102vh;padding-block:88px 12vh}
@@ -143,17 +146,15 @@
   <span class="brand" id="brand">Ghala Mansour</span>
   <span class="right">
     <span class="rail" id="rail">AI ENGINEER</span>
+    <a class="pill" id="liTop" href="https://www.linkedin.com/in/ghala-mansour-975526275" target="_blank" rel="noopener">LinkedIn</a>
     <button class="pill" id="langBtn">العربية</button>
     <button class="pill" id="themeBtn">Light</button>
   </span>
 </div>
 <div class="progress"><i id="bar"></i></div>
 <div class="scrollcue" id="cue">SCROLL</div>
+<div class="step" id="step" aria-hidden="true"><b>01</b><span>/ 04</span></div>
 
-<nav class="chapters" id="chapters" aria-hidden="true">
-  <em>Janah</em>
-  <b data-ch="1">01</b><b data-ch="2">02</b><b data-ch="3">03</b><b data-ch="4">04</b>
-</nav>
 <main id="story"></main>
 
 <script>
@@ -258,12 +259,16 @@ const STORY = [
          lede:'AI Continuous Improvement Engineer, inside a quality and improvement department.',
          more:'I lead the intake project above, review improvement proposals and their charters before approval, and build the data work behind them in SAP and Power BI.',
          facts:[['3.9/4','GPA · first-class honours'],['2026','BSc AI · Umm Al-Qura']],
-         links:[['ghala.m.mansour@gmail.com','mailto:ghala.m.mansour@gmail.com'],['LinkedIn','https://linkedin.com/in/ghala-mansour-975526275'],['GitHub','https://github.com/GhalaMansour']] },
+         links:[['ghala.m.mansour@gmail.com','mailto:ghala.m.mansour@gmail.com'],['LinkedIn','https://www.linkedin.com/in/ghala-mansour-975526275'],['GitHub','https://github.com/GhalaMansour']],
+         form:{ title:'Rather write to me here?', name:'Your name', org:'Company or team', email:'Your email',
+                msg:'What are you looking for?', send:'Open the email', note:'This opens your mail app with the message ready — nothing is sent from this page.' } },
     ar:{ kicker:'اليوم', h2:'أين أنا الآن',
          lede:'مهندسة ذكاء اصطناعي للتحسين المستمر، داخل إدارة للجودة والتحسين.',
          more:'أقود مشروع الاستقبال الذكي أعلاه، وأراجع مقترحات التحسين ووثائقها قبل اعتمادها، وأبني ما تحتاجه من عمل على البيانات في SAP وPower BI.',
          facts:[['٣٫٩/٤','المعدل · مرتبة الشرف الأولى'],['٢٠٢٦','بكالوريوس ذكاء اصطناعي · أم القرى']],
-         links:[['ghala.m.mansour@gmail.com','mailto:ghala.m.mansour@gmail.com'],['LinkedIn','https://linkedin.com/in/ghala-mansour-975526275'],['GitHub','https://github.com/GhalaMansour']] } }
+         links:[['ghala.m.mansour@gmail.com','mailto:ghala.m.mansour@gmail.com'],['LinkedIn','https://www.linkedin.com/in/ghala-mansour-975526275'],['GitHub','https://github.com/GhalaMansour']],
+         form:{ title:'أو اكتب لي من هنا', name:'اسمك', org:'الشركة أو الفريق', email:'بريدك',
+                msg:'ما الذي تبحث عنه؟', send:'افتح البريد', note:'يفتح تطبيق بريدك والرسالة جاهزة، ولا يُرسل شيء من هذه الصفحة.' } } }
 ];
 const RAIL = { en:['AI ENGINEER','JANAH · ARABIC UAV SEARCH & RESCUE','01 REPORT','02 PLAN','03 SEE','04 CONFIRM','HAJJ REPORTS · ARABIC NLP','COMMERCIAL INTAKE AGENT · BUILT AND LED','COMPUTER VISION','LANGUAGE & LEARNING','NOW'],
                ar:['مهندسة ذكاء اصطناعي','جناح · بحث وإنقاذ بالدرون','٠١ البلاغ','٠٢ الخطة','٠٣ الرؤية','٠٤ التأكيد','بلاغات الحج','وكيل الفرص التجارية','رؤية حاسوبية','اللغة والتعلّم','اليوم'] };
@@ -282,11 +287,20 @@ function renderStory() {
     if (c.p) parts.push(`<p>${esc(c.p)}</p>`);
     if (c.facts) parts.push(`<ul class="facts">${c.facts.map(([v, l]) => `<li><b>${esc(v)}</b><span>${esc(l)}</span></li>`).join('')}</ul>`);
     if (c.flow) parts.push(`<div class="flow">${c.flow.map((f, k) => `<span class="${c.human === k ? 'human' : ''}">${esc(f)}</span>`).join('<i>→</i>')}</div>`);
-    if (c.more) parts.push(`<details class="more"><summary>${ar ? 'كيف يعمل' : 'How it works'}</summary><p>${esc(c.more)}</p></details>`);
+    if (c.more) parts.push(`<p class="detail">${esc(c.more)}</p>`);
     if (c.chips) parts.push(`<ul class="chips">${c.chips.map(t => `<li>${esc(t)}</li>`).join('')}</ul>`);
+    if (c.form) parts.push(`<form class="reach" novalidate>
+      <p class="reach-title">${esc(c.form.title)}</p>
+      <label><span>${esc(c.form.name)}</span><input name="name" type="text" autocomplete="name"></label>
+      <label><span>${esc(c.form.org)}</span><input name="org" type="text" autocomplete="organization"></label>
+      <label><span>${esc(c.form.email)}</span><input name="email" type="email" autocomplete="email"></label>
+      <label class="wide"><span>${esc(c.form.msg)}</span><textarea name="msg" rows="3"></textarea></label>
+      <button type="submit" class="reach-send">${esc(c.form.send)}</button>
+      <p class="reach-note">${esc(c.form.note)}</p>
+    </form>`);
     if (c.links) parts.push(`<div class="links">${c.links.map(([t, h]) => `<a href="${h}"${h.startsWith('http') ? ' target="_blank" rel="noopener"' : ''}>${esc(t)}</a>`).join('')}</div>`);
     const cls = ['beat', b.side, b.cover ? 'cover' : '', b.chapter ? 'chapter' : '', b.last ? 'chapter-last' : ''].filter(Boolean).join(' ');
-    return `<section class="${cls}" data-beat="${i}">${b.chapter ? '<span class="rail-line" aria-hidden="true"></span>' : ''}<div class="box">${parts.join('')}</div></section>`;
+    return `<section class="${cls}" data-beat="${i}"><div class="box">${parts.join('')}</div></section>`;
   }).join('');
 }
 function applyLang(lang) {
@@ -305,6 +319,22 @@ function applyLang(lang) {
 renderStory();
 applyLang(LANG);
 document.getElementById('langBtn').addEventListener('click', () => applyLang(LANG === 'ar' ? 'en' : 'ar'));
+document.addEventListener('submit', e => {
+  const f = e.target.closest('.reach');
+  if (!f) return;
+  e.preventDefault();
+  const v = n => (f.querySelector(`[name="${n}"]`)?.value || '').trim();
+  const ar = document.documentElement.lang === 'ar';
+  const subject = (ar ? 'تواصل من الموقع — ' : 'From your portfolio — ') + (v('name') || (ar ? 'بدون اسم' : 'no name'));
+  const body = [
+    (ar ? 'الاسم: ' : 'Name: ') + v('name'),
+    (ar ? 'الجهة: ' : 'Company: ') + v('org'),
+    (ar ? 'البريد: ' : 'Email: ') + v('email'),
+    '',
+    v('msg')
+  ].join('\n');
+  location.href = 'mailto:ghala.m.mansour@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+});
 document.getElementById('themeBtn').addEventListener('click', () =>
   window.applyTheme((document.documentElement.dataset.theme === 'dark') ? 'light' : 'dark'));
 window.RAIL = RAIL; window.getLang = () => LANG;
@@ -415,101 +445,87 @@ const g0 = new THREE.Group(); g0.position.z = at(0); scene.add(g0);
   g0.userData = { strands, field };
 }
 
-/* ---------- 1 · Janah: the aircraft and its search volume ---------- */
-const g1 = new THREE.Group(); g1.position.z = at(1); scene.add(g1);
+/* ---------- 1–5 · Janah: one mission, one aircraft, four steps ---------- */
+const stage = new THREE.Group(); stage.position.z = at(1); scene.add(stage);
+const JS_ = {};   // the stage's moving parts
 {
-  const drone = buildDrone(1.5); drone.position.y = .9; g1.add(drone);
-  const cone = new THREE.Mesh(new THREE.ConeGeometry(1.5, 2.6, 44, 1, true),
+  // --- always present: the aircraft, the ground it works over, and its camera cone
+  const drone = buildDrone(1.35); stage.add(drone);
+  const cone = new THREE.Mesh(new THREE.ConeGeometry(1.1, 2.1, 40, 1, true),
     new THREE.MeshBasicMaterial({ color: 0x6FD3C6, transparent: true, opacity: .09, side: THREE.DoubleSide, depthWrite: false }));
-  cone.position.y = -.5; g1.add(cone); COOL_MATS.push(cone.material);
-  const ground = new THREE.GridHelper(13, 26, 0x2C4A46, 0x22332F);
-  ground.material.transparent = true; ground.material.opacity = .5; ground.position.y = -1.85; g1.add(ground);
-  const sweep = new THREE.Mesh(new THREE.RingGeometry(1.2, 1.26, 72), new THREE.MeshBasicMaterial({ color: 0xE8B45C, transparent: true, side: THREE.DoubleSide }));
-  sweep.rotation.x = -Math.PI / 2; sweep.position.y = -1.83; g1.add(sweep); ACCENT_MATS.push(sweep.material);
-  const figures = [[-2.1, -1.3], [1.7, .9], [2.6, -1.9], [-1.2, 2.2]].map(([x, z]) => {
-    const f = person(.7, 0x8FA09A); f.position.set(x, -1.85, z); g1.add(f); return f;
-  });
-  g1.userData = { drone, cone, sweep, figures };
-}
+  stage.add(cone); COOL_MATS.push(cone.material);
+  const ground = new THREE.GridHelper(8.5, 17, 0x2C4A46, 0x22332F);
+  ground.material.transparent = true; ground.material.opacity = .45; ground.position.y = -1.9; stage.add(ground);
+  const sweep = new THREE.Mesh(new THREE.RingGeometry(1.1, 1.16, 64), new THREE.MeshBasicMaterial({ color: 0xE8B45C, transparent: true, opacity: 0, side: THREE.DoubleSide }));
+  sweep.rotation.x = -Math.PI / 2; sweep.position.y = -1.88; stage.add(sweep); ACCENT_MATS.push(sweep.material);
 
-/* ---------- 2 · Report: an Arabic sentence breaking into fields ---------- */
-const g2 = new THREE.Group(); g2.position.z = at(2); scene.add(g2);
-{
-  const sentence = typePanel('ولد عمره ٧ سنوات، لابس قميص أحمر، آخر مكان شوفناه عند الساحة', { w: 4.6, h: 1.15, size: 46, bg: 'rgba(255,255,255,0.06)', border: 'rgba(255,255,255,0.18)' });
-  sentence.position.set(0, 1.5, 0); g2.add(sentence);
-  const fields = [['العمر', '٧ سنوات'], ['الملابس', 'قميص أحمر'], ['الموقع', 'الساحة'], ['الحالة', 'بلاغ جديد']].map(([k, v], i) => {
+  // --- step 01: the report arrives as Arabic text, and fields are pulled out of it
+  const report = new THREE.Group(); stage.add(report);
+  const sentence = typePanel('ولد عمره ٧ سنوات، لابس قميص أحمر، عند الساحة', { w: 3.9, h: .95, size: 44, bg: 'rgba(255,255,255,0.06)', border: 'rgba(255,255,255,0.2)' });
+  sentence.position.set(0, 1.5, .2); report.add(sentence);
+  const fields = [['الملابس', 'قميص أحمر'], ['العمر', '٧ سنوات'], ['الموقع', 'الساحة']].map(([k, v], i) => {
     const row = new THREE.Group();
-    const kp = typePanel(k, { w: 1.25, h: .46, size: 40, ink: '#9FB4AE', bg: null });
-    const vp = typePanel(v, { w: 2.1, h: .46, size: 40, bg: 'rgba(111,211,198,0.10)', border: 'rgba(111,211,198,0.5)' });
-    kp.position.x = 1.75; vp.position.x = -.3; row.add(kp, vp);
-    row.position.set(0, .2 - i * .62, -.2); g2.add(row);
+    const kp = typePanel(k, { w: 1.0, h: .4, size: 34, ink: '#9FB4AE', bg: null });
+    const vp = typePanel(v, { w: 1.7, h: .4, size: 34, bg: 'rgba(111,211,198,0.12)', border: 'rgba(111,211,198,0.55)' });
+    kp.position.x = 1.45; vp.position.x = -.2; row.add(kp, vp);
+    row.position.set(0, .75 - i * .52, .25); row.userData.i = i; report.add(row);
     COOL_MATS.push(vp.material);
     return row;
   });
-  g2.userData = { sentence, fields };
-}
 
-/* ---------- 3 · Plan: a bounded mission path ---------- */
-const g3 = new THREE.Group(); g3.position.z = at(3); scene.add(g3);
-{
+  // --- step 02: the plan the model is allowed to fly, drawn inside its safety envelope
+  const plan = new THREE.Group(); stage.add(plan);
   const pts = [];
-  for (let i = 0; i <= 140; i++) { const t = i / 140, a = t * Math.PI * 3.4;
-    pts.push(new THREE.Vector3(Math.cos(a) * (2.4 - t * .9), -1.3 + t * 2.4, Math.sin(a) * (2.4 - t * .9))); }
+  for (let i = 0; i <= 150; i++) { const t = i / 150, a = t * Math.PI * 3.2;
+    pts.push(new THREE.Vector3(Math.cos(a) * (2.1 - t * .8), -1.1 + t * 2.1, Math.sin(a) * (2.1 - t * .8))); }
   const path = new THREE.CatmullRomCurve3(pts);
-  const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints(path.getPoints(260)),
-    new THREE.LineBasicMaterial({ color: 0x8FA8F0, transparent: true, opacity: .6 }));
-  g3.add(line); COOL_MATS.push(line.material);
-  const cage = wire(new THREE.BoxGeometry(6, 4.1, 6), 0xE8B45C, .3); g3.add(cage); ACCENT_MATS.push(cage.material);
-  const drone = buildDrone(1.05); g3.add(drone);
-  const waypoints = [0, .25, .5, .75].map(t => {
-    const m = new THREE.Mesh(new THREE.OctahedronGeometry(.11), new THREE.MeshStandardMaterial({ color: 0x8FA8F0, roughness: .3, emissive: 0x24406B, emissiveIntensity: .5 }));
-    m.position.copy(path.getPoint(t)); g3.add(m); return m;
-  });
-  const limit = typePanel('safety envelope · max alt 12 m', { w: 2.9, h: .4, size: 34, mono: true, rtl: false, align: 'left', ink: '#E8B45C', bg: null });
-  limit.position.set(0, 2.4, 0); g3.add(limit);
-  g3.userData = { path, drone, cage, waypoints, limit };
-}
+  const pathPts = path.getPoints(300);
+  const pathGeo = new THREE.BufferGeometry().setFromPoints(pathPts);
+  const pathLine = new THREE.Line(pathGeo, new THREE.LineBasicMaterial({ color: 0x8FA8F0, transparent: true, opacity: .6 }));
+  plan.add(pathLine); COOL_MATS.push(pathLine.material);
+  const cage = wire(new THREE.BoxGeometry(5.4, 3.8, 5.4), 0xE8B45C, .28); plan.add(cage); ACCENT_MATS.push(cage.material);
+  const limit = typePanel('max alt 12 m · battery floor 25%', { w: 2.8, h: .36, size: 30, mono: true, rtl: false, align: 'center', ink: '#E8B45C', bg: null });
+  limit.position.set(0, 2.2, 0); plan.add(limit);
 
-/* ---------- 4 · See: detection and matching over a crowd ---------- */
-const g4 = new THREE.Group(); g4.position.z = at(4); scene.add(g4);
-{
+  // --- step 03: the crowd the camera actually looks at
+  const search = new THREE.Group(); stage.add(search);
   const crowd = [];
-  for (let i = 0; i < 11; i++) {
-    const a = (i / 11) * Math.PI * 2, r = 1.1 + (i % 3) * .75;
-    const f = person(.75, i === 4 ? 0xE8B45C : 0x7E8E89);
-    f.position.set(Math.cos(a) * r * 1.5, -1.5, Math.sin(a) * r);
-    g4.add(f); crowd.push(f);
+  for (let i = 0; i < 9; i++) {
+    const a = (i / 9) * Math.PI * 2, r = 1 + (i % 3) * .6;
+    const f = person(.72, i === 4 ? 0xE8B45C : 0x7E8E89);
+    f.position.set(Math.cos(a) * r * 1.4, -1.9, Math.sin(a) * r);
+    f.userData.rise = .8 + (i % 4) * .06; search.add(f); crowd.push(f);
   }
   const target = crowd[4];
-  const box = wire(new THREE.BoxGeometry(.55, .95, .55), 0x6FD3C6, 0); g4.add(box); COOL_MATS.push(box.material);
-  const conf = typePanel('match 0.91 · clothing ✓', { w: 2.2, h: .36, size: 32, mono: true, rtl: false, align: 'left', ink: '#6FD3C6', bg: 'rgba(13,19,23,0.75)' });
-  conf.material.opacity = 0; g4.add(conf);
-  const beam = new THREE.Mesh(new THREE.PlaneGeometry(7, .05), new THREE.MeshBasicMaterial({ color: 0x6FD3C6, transparent: true, opacity: .5 }));
-  beam.rotation.x = -Math.PI / 2; beam.position.y = -1.4; g4.add(beam); COOL_MATS.push(beam.material);
-  const floor = new THREE.GridHelper(11, 22, 0x2C4A46, 0x22332F); floor.material.transparent = true; floor.material.opacity = .45; floor.position.y = -1.52; g4.add(floor);
-  g4.userData = { crowd, target, box, conf, beam };
-}
+  const box = wire(new THREE.BoxGeometry(.55, .95, .55), 0x6FD3C6, 0); search.add(box); COOL_MATS.push(box.material);
+  const conf = typePanel('match 0.91 · clothing ✓', { w: 2.1, h: .34, size: 30, mono: true, rtl: false, align: 'center', ink: '#6FD3C6', bg: 'rgba(13,19,23,0.8)' });
+  conf.material.opacity = 0; search.add(conf);
+  const beam = new THREE.Mesh(new THREE.PlaneGeometry(6, .05), new THREE.MeshBasicMaterial({ color: 0x6FD3C6, transparent: true, opacity: 0 }));
+  beam.rotation.x = -Math.PI / 2; beam.position.y = -1.82; search.add(beam); COOL_MATS.push(beam.material);
 
-/* ---------- 5 · Confirm: three candidates, one human decision ---------- */
-const g5 = new THREE.Group(); g5.position.z = at(5); scene.add(g5);
-{
+  // --- step 04: candidates raised for a person to judge
+  const confirm = new THREE.Group(); stage.add(confirm);
   const cards = [0, 1, 2].map(i => {
-    const grp = new THREE.Group();
-    const plate = new THREE.Mesh(new THREE.ExtrudeGeometry(rounded(1.4, 1.9, .1), { depth: .04, bevelEnabled: false }),
-      new THREE.MeshStandardMaterial({ color: i === 1 ? 0x20302C : 0x1B2328, roughness: .5 }));
-    grp.add(plate);
-    const fig = person(.9, i === 1 ? 0xE8B45C : 0x6E7D78); fig.position.set(0, -.55, .1); grp.add(fig);
-    const score = typePanel(['0.62', '0.91', '0.48'][i], { w: .9, h: .3, size: 30, mono: true, rtl: false, align: 'center', ink: i === 1 ? '#E8B45C' : '#9AA7A2', bg: null });
-    score.position.set(0, .78, .06); grp.add(score);
-    grp.position.set((i - 1) * 1.75, .1, -i * .18);
-    g5.add(grp); return grp;
+    const g = new THREE.Group();
+    const plate = new THREE.Mesh(new THREE.ExtrudeGeometry(rounded(1.15, 1.6, .09), { depth: .04, bevelEnabled: false }),
+      new THREE.MeshStandardMaterial({ color: i === 1 ? 0x20302C : 0x1B2328, roughness: .5, transparent: true, opacity: 1 }));
+    g.add(plate);
+    const fig = person(.78, i === 1 ? 0xE8B45C : 0x6E7D78); fig.position.set(0, -.5, .1); g.add(fig);
+    const score = typePanel(['0.62', '0.91', '0.48'][i], { w: .8, h: .28, size: 28, mono: true, rtl: false, align: 'center', ink: i === 1 ? '#E8B45C' : '#9AA7A2', bg: null });
+    score.position.set(0, .62, .06); g.add(score);
+    g.position.set((i - 1) * 1.45, -.2, 0); g.userData.i = i;
+    confirm.add(g); return g;
   });
-  const stamp = typePanel('rescue team confirmed', { w: 2.8, h: .42, size: 34, mono: true, rtl: false, align: 'center', ink: '#0D1317', bg: '#E8B45C' });
-  stamp.position.set(0, -1.5, .3); stamp.material.opacity = 0; g5.add(stamp);
-  const ring = new THREE.Mesh(new THREE.TorusGeometry(.95, .025, 12, 60), new THREE.MeshBasicMaterial({ color: 0xE8B45C, transparent: true, opacity: 0 }));
-  ring.position.set(0, .1, .2); g5.add(ring); ACCENT_MATS.push(ring.material);
-  g5.userData = { cards, stamp, ring };
+  const stamp = typePanel('rescue team confirmed · case closed', { w: 3.1, h: .4, size: 30, mono: true, rtl: false, align: 'center', ink: '#0D1317', bg: '#E8B45C' });
+  stamp.position.set(0, -1.55, .3); stamp.material.opacity = 0; confirm.add(stamp);
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(.85, .022, 12, 56), new THREE.MeshBasicMaterial({ color: 0xE8B45C, transparent: true, opacity: 0 }));
+  ring.position.set(0, -.1, .25); confirm.add(ring); ACCENT_MATS.push(ring.material);
+
+  Object.assign(JS_, { drone, cone, ground, sweep, report, sentence, fields, plan, pathGeo, pathLine, cage, limit,
+                       search, crowd, target, box, conf, beam, confirm, cards, stamp, ring, path });
 }
+// the five Janah beats all point at this one stage
+const g1 = stage, g2 = stage, g3 = stage, g4 = stage, g5 = stage;
 
 /* ---------- 6 · Traffic: trajectories lifted off the road ---------- */
 const g6 = new THREE.Group(); g6.position.z = at(8); scene.add(g6);
@@ -654,36 +670,35 @@ const g10 = new THREE.Group(); g10.position.z = at(10); scene.add(g10);
 
 /* ---------- layout: art always opposite the text column ---------- */
 const GROUPS = [g0, g1, g2, g3, g4, g5, g7, g8, g6, g9, g10];   // hajj → agent → vision → language
+// beats 1–5 are one project: they share a station, so the camera holds still there
+const STATION = [0, 1, 1, 1, 1, 1, 2, 3, 4, 5, 6];
+const stationOf = s => s <= 1 ? s : (s <= 5 ? 1 : s - 4);
+const JANAH = [1, 2, 3, 4, 5];
 // centre each scene and keep it inside its half of the screen
 GROUPS.forEach(g => {
   const box = new THREE.Box3().setFromObject(g);
   const cx = (box.min.x + box.max.x) / 2;
   if (isFinite(cx)) g.children.forEach(c => { c.position.x -= cx; });
   const w = box.max.x - box.min.x;
-  g.userData.fit = isFinite(w) && w > 6.4 ? 6.4 / w : 1;
+  g.userData.fit = isFinite(w) && w > 5.6 ? 5.6 / w : 1;
 });
 let beats = [...document.querySelectorAll('.beat')];
 const dirSign = () => (document.documentElement.dir === 'rtl' ? -1 : 1);
 function assignSides() {
   beats.forEach((b, i) => { if (GROUPS[i]) GROUPS[i].userData.side = (b.classList.contains('a') ? 1 : -1) * dirSign(); });
+  JANAH.forEach(i => { if (GROUPS[i]) GROUPS[i].userData.side = GROUPS[1].userData.side; });
 }
-const chaptersEl = document.getElementById('chapters');
-function markChapters(sm) {
-  // the rail only exists while the reader is inside Janah (cover + four chapters)
-  const inside = sm > .6 && sm < 5.55;
-  chaptersEl.classList.toggle('on', inside);
-  if (!inside) return;
-  const cur = Math.min(4, Math.max(1, Math.round(sm) - 1));
-  chaptersEl.querySelectorAll('b').forEach(b => b.classList.toggle('now', +b.dataset.ch === cur));
-}
+
 function layoutGroups() {
   const narrow = innerWidth < 900;
   const halfAt = d => Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * d * camera.aspect;
   GROUPS.forEach((g, i) => {
     const side = g.userData.side || 1;
     g.scale.setScalar((narrow ? .58 : .98) * (g.userData.fit || 1));
-    const x = narrow ? 0 : side * Math.min(halfAt(9) * .52, 4.6);
-    g.position.set(x, narrow ? 2.8 : 0, at(i));
+    // the Janah stage is wider than the others, so it sits closer to centre
+    const reach = (g === stage) ? 3.9 : Math.min(halfAt(9) * .62, 5.6);
+    const x = narrow ? 0 : side * reach;
+    g.position.set(x, narrow ? 2.8 : 0, at(STATION[i]));
   });
 }
 assignSides(); layoutGroups();
@@ -701,6 +716,7 @@ scene.traverse(o => {
     if (!m || !m.color || m.userData.base) return;
     m.userData.base = m.color.clone();
     m.userData.kind = o.isPoints ? 'points' : (o.isLine || o.isLineSegments) ? 'line' : 'solid';
+    m.userData.baseOpacity = m.opacity;
     SCENE_MATS.push(m);
   });
 });
@@ -807,7 +823,7 @@ function paintTopic(sm) {
 }
 
 /* ---------- scroll driving ---------- */
-const bar = document.getElementById('bar'), rail = document.getElementById('rail'), cue = document.getElementById('cue');
+const bar = document.getElementById('bar'), rail = document.getElementById('rail'), cue = document.getElementById('cue'), stepEl = document.getElementById('step');
 const NAMES = () => (window.RAIL ? window.RAIL[window.getLang()] : []);
 let target = 0, smooth = 0;
 const io = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('in', e.isIntersecting)), { threshold: .35, rootMargin: '-10% 0px -20%' });
@@ -840,8 +856,15 @@ function frame(now) {
   smx += (mx - smx) * k60(.05, dt); smy += (my - smy) * k60(.05, dt);
   const t = reduce ? 8.4 : now / 1000;   // a fixed pose when motion is reduced
 
-  camera.position.set(smx * 1.3, -smy * .8 + Math.sin(smooth * 1.7) * .2, -smooth * SPACING + 7);
-  camera.rotation.set(-smy * .05, smx * .1, Math.sin(smooth * .9) * .01);
+  // inside Janah the camera stops travelling and arcs around the scene instead
+  const st = stationOf(smooth);
+  const inJanah = smooth > 1 && smooth < 5;
+  const phase = Math.max(0, Math.min(4, smooth - 1));
+  const arc = inJanah ? (phase / 4) : 0;
+  camera.position.set(smx * 1.3 + Math.sin(arc * Math.PI) * .85,
+                      -smy * .8 + Math.sin(smooth * 1.7) * .2 + arc * .5,
+                      -st * SPACING + 7 - Math.sin(arc * Math.PI) * .7);
+  camera.rotation.set(-smy * .05 - arc * .05, smx * .1 - Math.sin(arc * Math.PI) * .12, Math.sin(smooth * .9) * .01);
 
   // 0 · braided strands
   g0.rotation.y = t * .12 + smx * .3;
@@ -851,59 +874,89 @@ function frame(now) {
   } });
   g0.userData.field.rotation.y = -t * .04;
 
-  // 1 · Janah
-  const u1 = g1.userData;
-  u1.drone.position.y = .9 + Math.sin(t * 1.5) * .06;
-  u1.drone.rotation.y = -.5 + Math.sin(t * .3) * .6 + smx * .3;
-  u1.drone.userData.props.forEach(p => p.rotation.y += .55 * p.userData.dir);
-  u1.cone.material.opacity = .07 + .04 * Math.sin(t * 2);
-  const sw = (t * .35) % 1;
-  u1.sweep.scale.setScalar(.5 + sw * 1.6); u1.sweep.material.opacity = .8 * (1 - sw);
-  u1.figures.forEach((f, i) => { f.rotation.y = Math.sin(t * .4 + i) * .5; });
+  // 1–5 · Janah: the drone stays, the mission around it changes
+  {
+    const J = JS_, ph = Math.max(0, Math.min(4, smooth - 1));
+    const w = k => Math.max(0, 1 - Math.abs(ph - k));        // weight of each step
+    const after = k => Math.max(0, Math.min(1, ph - k));      // progress past a step
+    const vis = (o, v) => { o.visible = v > .01; return v; };
 
-  // 2 · report → fields
-  const n2 = near(2, smooth);
-  g2.userData.sentence.rotation.y = smx * .18;
-  g2.userData.fields.forEach((row, i) => {
-    const on = Math.max(0, Math.min(1, n2 * 1.8 - i * .2));
-    row.position.x = (1 - on) * 2.2 * (g2.userData.side || 1) * -1;
-    row.children.forEach(c => fade(c.material, on, dt));
-    row.rotation.y = smx * .18;
-  });
+    // props always turning; the aircraft never disappears
+    J.drone.userData.props.forEach(pr => pr.rotation.y += .55 * pr.userData.dir);
+    J.ground.material.opacity = .25 + .3 * Math.max(w(0), Math.max(w(2), w(3)));
 
-  // 3 · plan
-  const u3 = g3.userData, n3 = near(3, smooth);
-  const pt = u3.path.getPoint((t * .1) % 1);
-  u3.drone.position.copy(pt);
-  u3.drone.rotation.y = -t * .6;
-  u3.drone.userData.props.forEach(p => p.rotation.y += .6 * p.userData.dir);
-  u3.cage.material.opacity = .14 + n3 * .26;
-  u3.waypoints.forEach((w, i) => { w.rotation.set(t * .8 + i, t * .5, 0); w.scale.setScalar(1 + Math.sin(t * 2 + i) * .12); });
-  fade(u3.limit.material, n3, dt);
+    // step 02 makes it fly the planned path; elsewhere it hovers
+    const flying = Math.max(0, Math.min(1, (ph - 1.15) * 1.6)) * (1 - after(2.6));
+    if (flying > .02) {
+      const u = (t * .09) % 1, pt = J.path.getPoint(u);
+      J.drone.position.lerp(pt, k60(.08, dt));
+      J.drone.rotation.y += ((-u * Math.PI * 3.2 - 1.2) - J.drone.rotation.y) * k60(.05, dt);
+    } else {
+      const home = new THREE.Vector3(0, (ph > 2.4 ? 1.15 : .75) + Math.sin(t * 1.4) * .06, 0);
+      J.drone.position.lerp(home, k60(.05, dt));
+      J.drone.rotation.y += ((-.5 + Math.sin(t * .3) * .5 + smx * .3) - J.drone.rotation.y) * k60(.05, dt);
+    }
+    J.drone.rotation.x = .05 + flying * .12;
+    J.cone.position.copy(J.drone.position).add(new THREE.Vector3(0, -1.2, 0));
+    J.cone.material.opacity = (.05 + .05 * Math.sin(t * 2)) + w(3) * .09;
 
-  // 4 · see
-  const u4 = g4.userData, n4 = near(4, smooth);
-  u4.crowd.forEach((f, i) => { f.position.y = -1.5 + Math.sin(t * .8 + i) * .02; f.rotation.y = Math.sin(t * .3 + i) * .7; });
-  u4.beam.position.z = Math.sin(t * .55) * 2.4;
-  const locked = Math.max(0, Math.min(1, (Math.sin(t * .55 - 1.1) + 1) / 2 * n4 * 1.4));
-  u4.box.position.copy(u4.target.position).add(new THREE.Vector3(0, .5, 0));
-  u4.box.scale.setScalar(.9 + locked * .2);
-  fade(u4.box.material, locked, dt);
-  u4.conf.position.copy(u4.box.position).add(new THREE.Vector3(0, .85, 0));
-  u4.conf.rotation.y = smx * .2;
-  fade(u4.conf.material, locked, dt);
+    // step 01 · the report is read and pulled apart
+    const r1 = Math.max(w(1), ph < 1 ? w(0) * .25 : 0);
+    vis(J.report, r1);
+    J.sentence.material.opacity = r1;
+    J.sentence.position.y = 1.5 + (1 - r1) * .25;
+    J.fields.forEach(row => {
+      const on = Math.max(0, Math.min(1, w(1) * 1.9 - row.userData.i * .22));
+      row.children.forEach(c => { c.material.transparent = true; c.material.opacity = on; });
+      row.position.x = (1 - on) * -1.1;
+    });
 
-  // 5 · confirm
-  const u5 = g5.userData, n5 = near(5, smooth);
-  u5.cards.forEach((c, i) => {
-    const mid = i === 1;
-    c.position.y += (((mid ? .45 : -.05) * n5 + .1) - c.position.y) * k60(.07, dt);
-    c.rotation.y = smx * .25 + (i - 1) * .12;
-    c.scale.setScalar(1 + (mid ? n5 * .1 : -n5 * .05));
-  });
-  u5.ring.rotation.z = t * .5; u5.ring.scale.setScalar(.8 + n5 * .35);
-  fade(u5.ring.material, n5 * .8, dt);
-  fade(u5.stamp.material, Math.max(0, n5 * 1.6 - .5), dt);
+    // step 02 · the path draws itself inside the safety envelope
+    const r2 = w(2);
+    vis(J.plan, r2);
+    const drawn = Math.max(0, Math.min(1, (ph - 1.1) * 1.4));
+    J.pathGeo.setDrawRange(0, Math.max(2, Math.floor(drawn * 300)));
+    J.pathLine.material.opacity = r2 * .9;
+    J.cage.material.opacity = r2 * .45;
+    J.cage.scale.setScalar(1 + Math.sin(t * 1.1) * .004);
+    J.limit.material.opacity = r2;
+
+    // step 03 · people rise out of the ground, the beam sweeps, one match locks
+    const r3 = w(3);
+    vis(J.search, r3);
+    J.crowd.forEach((f, i) => {
+      f.position.y = -1.9 + f.userData.rise * r3;
+      f.scale.setScalar(.45 + r3 * .75);
+      f.rotation.y = Math.sin(t * .3 + i) * .6;
+      f.userData.mat.transparent = true; f.userData.mat.opacity = r3;
+    });
+    J.beam.material.opacity = r3 * .5;
+    J.beam.position.z = Math.sin(t * .6) * 2;
+    const locked = Math.max(0, Math.min(1, (Math.sin(t * .6 - 1.2) + 1) / 2)) * r3;
+    J.box.position.copy(J.target.position).add(new THREE.Vector3(0, .5, 0));
+    J.box.scale.setScalar(.85 + locked * .25);
+    J.box.material.opacity = locked;
+    J.conf.position.copy(J.box.position).add(new THREE.Vector3(0, .8, 0));
+    J.conf.material.opacity = locked;
+    J.sweep.scale.setScalar(.6 + ((t * .35) % 1) * 1.5);
+    J.sweep.material.opacity = (1 - ((t * .35) % 1)) * Math.max(w(0), r3) * .7;
+
+    // step 04 · the decision belongs to a person
+    const r4 = w(4);
+    vis(J.confirm, r4);
+    J.cards.forEach(c => {
+      const mid = c.userData.i === 1;
+      const on = Math.max(0, Math.min(1, r4 * 1.7 - c.userData.i * .12));
+      c.position.y = -.2 + (mid ? .3 : 0) * r4 - (1 - on) * .6;
+      c.scale.setScalar((mid ? 1.08 : .96) * (.9 + on * .1));
+      c.traverse(o => { if (o.material && o.material.userData.baseOpacity !== undefined) {
+        o.material.transparent = true; o.material.opacity = o.material.userData.baseOpacity * on; } });
+    });
+    J.ring.rotation.z = t * .5;
+    J.ring.material.opacity = Math.max(0, r4 * 1.4 - .4) * .8;
+    J.ring.scale.setScalar(.85 + r4 * .2);
+    J.stamp.material.opacity = Math.max(0, r4 * 1.8 - .8);
+  }
 
   // 6 · traffic
   const n6 = near(8, smooth);
@@ -989,7 +1042,11 @@ function frame(now) {
   u10.dust.rotation.y = t * .03;
 
   paintTopic(smooth);
-  markChapters(smooth);
+  { // step counter, only while the mission is on screen
+    const inJ = smooth > 1.4 && smooth < 5.45;
+    stepEl.classList.toggle('on', inJ);
+    if (inJ) { const n = Math.min(4, Math.max(1, Math.round(smooth) - 1)); if (stepEl.dataset.n !== String(n)) { stepEl.dataset.n = String(n); stepEl.firstElementChild.textContent = '0' + n; } }
+  }
   const idx = Math.round(smooth);
   const names = NAMES();
   if (names[idx] && (idx !== lastName || rail.textContent !== names[idx])) { lastName = idx; rail.textContent = names[idx]; }
