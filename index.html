@@ -90,7 +90,22 @@
   .detail{font-size:15.5px;line-height:1.75;color:color-mix(in srgb,var(--text) 72%,transparent)}
   .chapter h2{font-size:clamp(25px,3.2vw,38px)}
   .chapter .lede{font-size:clamp(16px,1.6vw,19px)}
-    .reach{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px;padding:20px;border:1px solid var(--line);border-radius:14px;
+    .path{list-style:none;margin:4px 0 0;padding:0;display:grid;gap:14px;border-inline-start:1.5px solid var(--line);padding-inline-start:18px}
+  .path li{display:grid;gap:4px;position:relative}
+  .path li::before{content:"";position:absolute;inset-inline-start:-24px;top:.5em;width:9px;height:9px;border-radius:50%;
+    background:var(--bg);border:1.5px solid var(--accent)}
+  .path .when{font:500 11px/1 var(--f-mono);letter-spacing:.14em;color:var(--accent)}
+  .path .where{display:flex;align-items:center;gap:9px;font-weight:600;font-size:16px}
+  .path .where img{width:22px;height:22px;object-fit:contain;background:#fff;border-radius:5px;padding:2px}
+  .path .what{font-size:14.5px;color:var(--muted);line-height:1.6}
+  .skills li{color:color-mix(in srgb,var(--text) 86%,transparent)}
+  .courses{list-style:none;margin:2px 0 0;padding:0;display:grid;gap:7px}
+  .courses li{font:400 13.5px/1.5 var(--f-mono);color:var(--muted);padding-inline-start:16px;position:relative}
+  .courses li::before{content:"✓";position:absolute;inset-inline-start:0;color:var(--accent)}
+  .cvline{margin:4px 0 0}
+  .cvbtn{display:inline-flex;align-items:center;min-height:46px;padding:0 20px;border-radius:999px;text-decoration:none;
+    font:600 14px/1 var(--f-body);background:var(--accent);color:#0B1013;border:1px solid var(--accent)}
+  .reach{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px;padding:20px;border:1px solid var(--line);border-radius:14px;
     background:color-mix(in srgb,var(--text) 4%,transparent);max-width:34rem}
   .reach-title{grid-column:1/-1;font:600 12.5px/1 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
   .reach label{display:grid;gap:6px}
@@ -255,11 +270,44 @@ const STORY = [
          chips:['علّام','DeepFace','Streamlit'] } },
 
   { side:'a',
+    en:{ kicker:'Current role · data behind the decisions', h2:'Dashboards people actually decide on',
+         lede:'A supply-chain dashboard was reading from a hand-kept copy of SAP. Every number on it was one export behind.',
+         more:'I moved it onto live SAP data: auditing what the report really depended on, mapping each legacy field to its new source, and testing row by row instead of trusting that two columns with similar names mean the same thing. One candidate field matched its old counterpart only about seven times in ten, so it was rejected rather than shipped. Alongside it I defined Perfect Order — what counts as an order fulfilled correctly — and redesigned the direct-delivery-to-site flow so approvals happen in SAP instead of email threads.',
+         chips:['SAP','Power BI · DAX','Data validation','Process redesign'] },
+    ar:{ kicker:'الدور الحالي · البيانات خلف القرارات', h2:'لوحات يُتَّخذ عليها القرار فعلاً',
+         lede:'كانت لوحة سلسلة الإمداد تقرأ من نسخة يدوية من SAP، فكل رقم فيها متأخر بتصدير كامل.',
+         more:'نقلتها إلى بيانات SAP الحيّة: تدقيق ما تعتمد عليه اللوحة فعلاً، وربط كل حقل قديم بمصدره الجديد، واختبار صفاً صفاً بدل افتراض أن عمودين بأسماء متشابهة يعنيان الشيء نفسه. وقد تطابق أحد الحقول المرشحة مع نظيره القديم في سبع حالات من عشر تقريباً، فرُفض بدل أن يُعتمد. ومعها عرّفت مؤشر الطلب المثالي — ما الذي يُحتسب طلباً نُفِّذ بشكل صحيح — وأعدت تصميم مسار التوصيل المباشر للمواقع لتتم الموافقات داخل SAP بدل سلاسل البريد.',
+         chips:['SAP','Power BI · DAX','تحقق من البيانات','إعادة تصميم العمليات'] } },
+
+  { side:'b',
+    en:{ kicker:'The path here', h2:'Four rooms, four lessons',
+         lede:'A hospital, a university in Hong Kong, the holy sites during Hajj, and a building-systems company.',
+         more:'At King Abdullah Medical City I built Power BI dashboards for operational KPIs and learned that a number nobody trusts is worse than no number. At the Education University of Hong Kong, selected for an AI and computer vision exchange, I worked on applied deep learning in a research setting. At Kidana I shipped into a live Hajj season. And now, in a quality and continuous-improvement department, I lead an AI project while reviewing other teams\' proposals and charters before they are approved.',
+         timeline:[
+           ['2025','King Abdullah Medical City','AI & data analytics intern · Power BI, DAX, operational KPIs','media/marks/kamc.png'],
+           ['2025','Education University of Hong Kong','Selected for an AI & computer vision exchange','media/marks/eduhk.png'],
+           ['2026','Kidana Development Company','AI engineer for the Hajj season','',],
+           ['2026 →','Quality, Warranty & CI department','AI continuous improvement engineer · project review and governance','']
+         ] },
+    ar:{ kicker:'الطريق إلى هنا', h2:'أربع غرف، أربعة دروس',
+         lede:'مستشفى، وجامعة في هونغ كونغ، والمشاعر المقدسة في موسم الحج، وشركة أنظمة مبانٍ.',
+         more:'في مدينة الملك عبدالله الطبية بنيت لوحات Power BI لمؤشرات التشغيل، وتعلّمت أن رقماً لا يثق به أحد أسوأ من غياب الرقم. وفي جامعة التعليم في هونغ كونغ، بعد اختياري لبرنامج تبادل في الذكاء الاصطناعي والرؤية الحاسوبية، عملت على التعلّم العميق التطبيقي في بيئة بحثية. وفي كدانة سلّمت نظاماً يعمل في موسم حج حقيقي. واليوم، في إدارة للجودة والتحسين المستمر، أقود مشروع ذكاء اصطناعي وأراجع مقترحات الفرق الأخرى ووثائقها قبل اعتمادها.',
+         timeline:[
+           ['٢٠٢٥','مدينة الملك عبدالله الطبية','متدربة ذكاء اصطناعي وتحليل بيانات · Power BI ومؤشرات التشغيل','media/marks/kamc.png'],
+           ['٢٠٢٥','جامعة التعليم في هونغ كونغ','اختيار لبرنامج تبادل في الذكاء الاصطناعي والرؤية الحاسوبية','media/marks/eduhk.png'],
+           ['٢٠٢٦','شركة كدانة للتطوير','مهندسة ذكاء اصطناعي لموسم الحج',''],
+           ['٢٠٢٦ →','إدارة الجودة والضمان والتحسين المستمر','مهندسة تحسين مستمر · مراجعة المشاريع وحوكمتها','']
+         ] } },
+
+  { side:'a',
     en:{ kicker:'Now', h2:'Where I am today',
          lede:'AI Continuous Improvement Engineer, inside a quality and improvement department.',
          more:'I lead the intake project above, review improvement proposals and their charters before approval, and build the data work behind them in SAP and Power BI.',
          facts:[['3.9/4','GPA · first-class honours'],['2026','BSc AI · Umm Al-Qura']],
          links:[['ghala.m.mansour@gmail.com','mailto:ghala.m.mansour@gmail.com'],['LinkedIn','https://www.linkedin.com/in/ghala-mansour-975526275'],['GitHub','https://github.com/GhalaMansour']],
+         skills:['Python','PyTorch','Arabic NLP','Computer vision','IBM Maximo','SAP','Power BI · DAX','Docker','Flask · FastAPI'],
+         courses:['Generative AI with LLMs — DeepLearning.AI & AWS','NLP Specialization — DeepLearning.AI','AI Specialization — DeepLearning.AI'],
+         cv:['Download my CV (PDF)','Ghala-Mansour-CV.pdf'],
          form:{ title:'Rather write to me here?', name:'Your name', org:'Company or team', email:'Your email',
                 msg:'What are you looking for?', send:'Open the email', note:'This opens your mail app with the message ready — nothing is sent from this page.' } },
     ar:{ kicker:'اليوم', h2:'أين أنا الآن',
@@ -267,11 +315,14 @@ const STORY = [
          more:'أقود مشروع الاستقبال الذكي أعلاه، وأراجع مقترحات التحسين ووثائقها قبل اعتمادها، وأبني ما تحتاجه من عمل على البيانات في SAP وPower BI.',
          facts:[['٣٫٩/٤','المعدل · مرتبة الشرف الأولى'],['٢٠٢٦','بكالوريوس ذكاء اصطناعي · أم القرى']],
          links:[['ghala.m.mansour@gmail.com','mailto:ghala.m.mansour@gmail.com'],['LinkedIn','https://www.linkedin.com/in/ghala-mansour-975526275'],['GitHub','https://github.com/GhalaMansour']],
+         skills:['Python','PyTorch','معالجة اللغة العربية','رؤية حاسوبية','IBM Maximo','SAP','Power BI · DAX','Docker','Flask · FastAPI'],
+         courses:['الذكاء التوليدي ونماذج اللغة — DeepLearning.AI و AWS','تخصص معالجة اللغة الطبيعية — DeepLearning.AI','تخصص الذكاء الاصطناعي — DeepLearning.AI'],
+         cv:['حمّل سيرتي الذاتية (PDF)','Ghala-Mansour-CV.pdf'],
          form:{ title:'أو اكتب لي من هنا', name:'اسمك', org:'الشركة أو الفريق', email:'بريدك',
                 msg:'ما الذي تبحث عنه؟', send:'افتح البريد', note:'يفتح تطبيق بريدك والرسالة جاهزة، ولا يُرسل شيء من هذه الصفحة.' } } }
 ];
-const RAIL = { en:['AI ENGINEER','JANAH · ARABIC UAV SEARCH & RESCUE','01 REPORT','02 PLAN','03 SEE','04 CONFIRM','HAJJ REPORTS · ARABIC NLP','COMMERCIAL INTAKE AGENT · BUILT AND LED','COMPUTER VISION','LANGUAGE & LEARNING','NOW'],
-               ar:['مهندسة ذكاء اصطناعي','جناح · بحث وإنقاذ بالدرون','٠١ البلاغ','٠٢ الخطة','٠٣ الرؤية','٠٤ التأكيد','بلاغات الحج','وكيل الفرص التجارية','رؤية حاسوبية','اللغة والتعلّم','اليوم'] };
+const RAIL = { en:['AI ENGINEER','JANAH · ARABIC UAV SEARCH & RESCUE','01 REPORT','02 PLAN','03 SEE','04 CONFIRM','HAJJ REPORTS · ARABIC NLP','COMMERCIAL INTAKE AGENT · BUILT AND LED','COMPUTER VISION','LANGUAGE & LEARNING','DATA WORK','THE PATH HERE','NOW'],
+               ar:['مهندسة ذكاء اصطناعي','جناح · بحث وإنقاذ بالدرون','٠١ البلاغ','٠٢ الخطة','٠٣ الرؤية','٠٤ التأكيد','بلاغات الحج','وكيل الفرص التجارية','رؤية حاسوبية','اللغة والتعلّم','عمل البيانات','الطريق إلى هنا','اليوم'] };
 let LANG = (localStorage.getItem('ghala-lang') || 'en');
 
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
@@ -289,6 +340,13 @@ function renderStory() {
     if (c.flow) parts.push(`<div class="flow">${c.flow.map((f, k) => `<span class="${c.human === k ? 'human' : ''}">${esc(f)}</span>`).join('<i>→</i>')}</div>`);
     if (c.more) parts.push(`<p class="detail">${esc(c.more)}</p>`);
     if (c.chips) parts.push(`<ul class="chips">${c.chips.map(t => `<li>${esc(t)}</li>`).join('')}</ul>`);
+    if (c.timeline) parts.push(`<ol class="path">${c.timeline.map(([when, where, what, mark]) => `<li>
+      <span class="when">${esc(when)}</span>
+      <span class="where">${mark ? `<img src="${mark}" alt="" loading="lazy">` : ''}${esc(where)}</span>
+      <span class="what">${esc(what)}</span></li>`).join('')}</ol>`);
+    if (c.skills) parts.push(`<ul class="chips skills">${c.skills.map(t => `<li>${esc(t)}</li>`).join('')}</ul>`);
+    if (c.courses) parts.push(`<ul class="courses">${c.courses.map(t => `<li>${esc(t)}</li>`).join('')}</ul>`);
+    if (c.cv) parts.push(`<p class="cvline"><a class="cvbtn" href="${c.cv[1]}" download>${esc(c.cv[0])}</a></p>`);
     if (c.form) parts.push(`<form class="reach" novalidate>
       <p class="reach-title">${esc(c.form.title)}</p>
       <label><span>${esc(c.form.name)}</span><input name="name" type="text" autocomplete="name"></label>
@@ -655,8 +713,50 @@ const g9 = new THREE.Group(); g9.position.z = at(9); scene.add(g9);
   g9.userData = { bunyan, floors, miniDrone, afqah, core, words, facePts, faceGeo, faceBase, mood, items, scan };
 }
 
+/* ---------- data work: figures lifting off a stale table ---------- */
+const gData = new THREE.Group(); gData.position.z = at(6); scene.add(gData);
+{
+  const bars = [], H = [1.5, .9, 2.1, 1.25, 1.8, 1.05];
+  H.forEach((h, i) => {
+    const m = new THREE.Mesh(new THREE.BoxGeometry(.34, 1, .34),
+      new THREE.MeshStandardMaterial({ color: i === 2 ? 0xE8B45C : 0x6FD3C6, roughness: .45, metalness: .15, transparent: true }));
+    m.position.set((i - 2.5) * .55, 0, 0); m.userData = { h, i }; gData.add(m); bars.push(m);
+    (i === 2 ? ACCENT_MATS : COOL_MATS).push(m.material);
+  });
+  const base = new THREE.Mesh(new THREE.BoxGeometry(3.6, .05, 1.1), new THREE.MeshStandardMaterial({ color: 0x1B2328, roughness: .8 }));
+  base.position.y = -.9; gData.add(base);
+  const trend = new THREE.Line(new THREE.BufferGeometry().setFromPoints(
+    H.map((h, i) => new THREE.Vector3((i - 2.5) * .55, -.9 + h * .62, .45))),
+    new THREE.LineBasicMaterial({ color: 0xE8B45C, transparent: true, opacity: .8 }));
+  gData.add(trend); ACCENT_MATS.push(trend.material);
+  const stale = typePanel('hand-kept copy', { w: 1.9, h: .34, size: 28, mono: true, rtl: false, align: 'center', ink: '#8C8C86', bg: 'rgba(255,255,255,0.05)' });
+  stale.position.set(-.9, 1.55, 0); gData.add(stale);
+  const live = typePanel('live SAP', { w: 1.5, h: .34, size: 28, mono: true, rtl: false, align: 'center', ink: '#0D1317', bg: '#6FD3C6' });
+  live.position.set(1.1, 1.55, .1); gData.add(live);
+  gData.userData = { bars, trend, stale, live };
+}
+
+/* ---------- the path: four rooms along one line ---------- */
+const gPath = new THREE.Group(); gPath.position.z = at(7); scene.add(gPath);
+{
+  const nodes = [0, 1, 2, 3].map(i => {
+    const g = new THREE.Group();
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(.28, .022, 10, 40),
+      new THREE.MeshBasicMaterial({ color: 0xE8B45C, transparent: true, opacity: .85 }));
+    const core = new THREE.Mesh(new THREE.IcosahedronGeometry(.13, 0),
+      new THREE.MeshStandardMaterial({ color: 0x6FD3C6, roughness: .3, flatShading: true }));
+    g.add(ring, core); ACCENT_MATS.push(ring.material); COOL_MATS.push(core.material);
+    g.position.set(0, 1.5 - i * 1, 0); g.userData.i = i; gPath.add(g); return g;
+  });
+  const spine = new THREE.Line(new THREE.BufferGeometry().setFromPoints(
+    [new THREE.Vector3(0, 1.9, 0), new THREE.Vector3(0, -1.9, 0)]),
+    new THREE.LineBasicMaterial({ color: 0x6FD3C6, transparent: true, opacity: .4 }));
+  gPath.add(spine); COOL_MATS.push(spine.material);
+  gPath.userData = { nodes, spine };
+}
+
 /* ---------- 10 · Now: the aircraft turns toward you ---------- */
-const g10 = new THREE.Group(); g10.position.z = at(10); scene.add(g10);
+const g10 = new THREE.Group(); g10.position.z = at(8); scene.add(g10);
 {
   const drone = buildDrone(1.9); drone.position.y = .2; g10.add(drone);
   const halo = new THREE.Mesh(new THREE.RingGeometry(2.1, 2.14, 80), new THREE.MeshBasicMaterial({ color: 0xE8B45C, transparent: true, opacity: .3, side: THREE.DoubleSide }));
@@ -669,9 +769,9 @@ const g10 = new THREE.Group(); g10.position.z = at(10); scene.add(g10);
 }
 
 /* ---------- layout: art always opposite the text column ---------- */
-const GROUPS = [g0, g1, g2, g3, g4, g5, g7, g8, g6, g9, g10];   // hajj → agent → vision → language
+const GROUPS = [g0, g1, g2, g3, g4, g5, g7, g8, g6, g9, gData, gPath, g10];   // hajj → agent → vision → language
 // beats 1–5 are one project: they share a station, so the camera holds still there
-const STATION = [0, 1, 1, 1, 1, 1, 2, 3, 4, 5, 6];
+const STATION = [0, 1, 1, 1, 1, 1, 2, 3, 4, 5, 6, 7, 8];
 const stationOf = s => s <= 1 ? s : (s <= 5 ? 1 : s - 4);
 const JANAH = [1, 2, 3, 4, 5];
 // centre each scene and keep it inside its half of the screen
@@ -779,7 +879,9 @@ const PALETTES = {
     { d: [0xE0A24E, 0x938871], l: [0x8E6411, 0x6E6557] },  // 7 hajj
     { d: [0x4CC48D, 0x6F8B81], l: [0x11724E, 0x566B61] },  // 8 SAM
     { d: [0xEF8FA4, 0x998089], l: [0xA83C58, 0x6E5F65] },  // 9 more
-    { d: [0xE4AE5E, 0x8C8275], l: [0x9A6A14, 0x6F675B] }   // 10 now
+    { d: [0x7FD1F0, 0x6F8894], l: [0x19627E, 0x566770] },  // 10 data
+    { d: [0x5FC9BC, 0x6E8E92], l: [0x12736A, 0x5C6E70] },  // 11 path
+    { d: [0xE4AE5E, 0x8C8275], l: [0x9A6A14, 0x6F675B] }   // 12 now
   ],
   // B · lab: cooler ground, mint spine, amber punctuation
   b: [
@@ -793,6 +895,8 @@ const PALETTES = {
     { d: [0xF0A868, 0x94867B], l: [0xA15A12, 0x6E6459] },
     { d: [0x4CC48D, 0x6F8B81], l: [0x11724E, 0x566B61] },
     { d: [0xEF8FA4, 0x998089], l: [0xA83C58, 0x6E5F65] },
+    { d: [0x7FD1F0, 0x6F8894], l: [0x19627E, 0x566770] },
+    { d: [0x4FD6C0, 0x72908C], l: [0x0C7363, 0x566B67] },
     { d: [0x4FD6C0, 0x72908C], l: [0x0C7363, 0x566B67] }
   ]
 };
@@ -1033,8 +1137,35 @@ function frame(now) {
   });
   u9.scan.material.opacity = .5 + .3 * Math.sin(t * 5);
 
+  // data work: bars grow to their real height once the section is reached
+  {
+    const n = near(10, smooth), u = gData.userData;
+    u.bars.forEach(b => {
+      const h = Math.max(.08, b.userData.h * (.25 + n * .75));
+      b.scale.y = h; b.position.y = -.9 + h / 2;
+      b.material.opacity = .35 + n * .65;
+    });
+    u.trend.material.opacity = Math.max(0, n * 1.3 - .3);
+    u.stale.material.opacity = Math.max(0, .9 - n * .8);
+    u.live.material.opacity = Math.max(0, n * 1.2 - .2);
+    gData.rotation.y = smx * .3;
+  }
+  // the path: each node lights as it is reached
+  {
+    const n = near(11, smooth), u = gPath.userData;
+    u.nodes.forEach(g => {
+      const on = Math.max(0, Math.min(1, n * 1.8 - g.userData.i * .18));
+      g.scale.setScalar(.6 + on * .5);
+      g.children[0].rotation.z = t * .4 + g.userData.i;
+      g.children[0].material.opacity = .25 + on * .7;
+      g.children[1].rotation.set(t * .5, t * .4, 0);
+    });
+    u.spine.material.opacity = .15 + n * .4;
+    gPath.rotation.y = smx * .25;
+  }
+
   // 10 · closing
-  const u10 = g10.userData, n10 = near(10, smooth);
+  const u10 = g10.userData, n10 = near(12, smooth);
   u10.drone.position.y = .2 + Math.sin(t * 1.3) * .07;
   u10.drone.rotation.y = .3 + Math.sin(t * .4) * .5 + smx * .3;
   u10.drone.userData.props.forEach(p => p.rotation.y += .5 * p.userData.dir);
